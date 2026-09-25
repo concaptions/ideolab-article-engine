@@ -1,0 +1,92 @@
+{
+  "site": {
+    "name": "Example Co",
+    "url": "https://www.example.com",
+    "description": "One line about what the site sells. Used by the writer to keep posts on-brand."
+  },
+  "paths": {
+    "blogDir": "content/blog",
+    "imagesDir": "public/images/blog",
+    "ledger": "memory/autopilot/ledger.json",
+    "topicBacklog": "memory/autopilot/topic-backlog.md",
+    "blogUrlPrefix": "/blog"
+  },
+  "content": {
+    "author": "Example Co Team",
+    "categories": [
+      "Marketing",
+      "Guides",
+      "Industry News"
+    ],
+    "minWords": 1200,
+    "moneyPages": [
+      "/services",
+      "/pricing"
+    ],
+    "bannedWords": [],
+    "banEmDashes": true,
+    "requiredFrontmatter": [
+      "title",
+      "date",
+      "excerpt",
+      "author",
+      "category",
+      "image",
+      "tags",
+      "status"
+    ],
+    "faqs": {
+      "required": true,
+      "min": 3,
+      "max": 5
+    },
+    "citations": {
+      "min": 2
+    },
+    "audience": "Describe exactly who reads this blog: their role, their day, what they care about, what device they read on.",
+    "voiceNotes": "Plain English. Problem-first openings. Outcome-led. No hype, no jargon. Short paragraphs.",
+    "links": {
+      "note": "David, Slack 24 September 2026: do not use 5 to 10 internal links.",
+      "external": {
+        "min": 1,
+        "max": 2
+      },
+      "toOtherArticles": {
+        "min": 1,
+        "max": 2,
+        "note": "Only to slugs that actually exist in blogDir. Zero is correct while the blog is still being rebuilt."
+      },
+      "promotional": {
+        "min": 1,
+        "max": 2,
+        "note": "The next step: free trial, book a call, follow us, leave a comment."
+      }
+    },
+    "cta": {
+      "approved": "Free 7 day trial of IdeoLab",
+      "url": "https://www.ideolab.ai/trial",
+      "note": "David, Slack 24 September 2026: for now it is just a FREE trial to ideolab for 7 days. Do not invent any other offer, discount or deadline."
+    },
+    "moneyPageLinks": {
+      "min": 1,
+      "max": 2
+    }
+  },
+  "keywords": {
+    "provider": "dataforseo",
+    "locationCode": 2840,
+    "languageCode": "en"
+  },
+  "cover": {
+    "enabled": true,
+    "provider": "kie-nano-banana-pro",
+    "aspectRatio": "16:9",
+    "styleNotes": "Match the covers already on the site in public/images/blog: a soft 3D render on a plain pale blue to white gradient, one clear central object, matte rounded surfaces, even studio lighting, a soft shadow underneath. Palette is brand blue #2f7cf0, light blue #8ebdff, ink navy #16283a for small details and CTA orange #f97316 as a small accent only. No photography, no people, no text or numbers in the image, no logos, no realistic product UI, no readable charts. The object must say what the article is about at a glance. Describe the intended cover in the cover_brief frontmatter field first."
+  },
+  "slack": {
+    "enabled": true
+  },
+  "git": {
+    "branch": "main"
+  }
+}

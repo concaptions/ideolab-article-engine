@@ -1,0 +1,14 @@
+{
+  "name": "ideolab-article-engine",
+  "version": "1.0.0",
+  "description": "Autonomous daily SEO blog engine for Claude Code: research, write, gate, publish, verify, announce. Config-driven and installable into any markdown-blog repo.",
+  "type": "module",
+  "scripts": {
+    "test": "node --test scripts/"
+  },
+  "repository": "github:concaption/ideolab-article-engine",
+  "license": "MIT",
+  "dependencies": {
+    "gray-matter": "^4.0.3"
+  }
+}
