@@ -36,10 +36,10 @@ That writes one full draft, prints the validator result, and publishes nothing.
    unused keyword. DataForSEO if the credentials are set, the seeded backlog if not.
    The dedup check compares search intent against the ledger, not just the wording.
 2. **Research.** Reads the pages already ranking and finds the angle they all miss.
-3. **Write.** One article per run, following `rules/blog-posts.md` and the
+3. **Write.** One article per run, following `.claude/rules/blog-posts.md` and the
    knowledge base. Structure rotation, citation rules, FAQs in frontmatter.
 4. **Cover.** One 16:9 image through Kie.ai, in the house style described in
-   `skills/kie-image-gen/SKILL.md`.
+   `.claude/skills/kie-image-gen/SKILL.md`.
 5. **Gate.** `validate-post.mjs` checks keyword placement, word count, money-page
    links, citations, FAQ shape, banned words and em dashes. An adversarial review
    subagent reads the draft afterwards. A failure leaves it as a draft.
@@ -94,9 +94,9 @@ should match, and the prompts that made them are in
 |---|---|
 | `prompt/article-master-prompt.md` | The writing standard. Edit this to change how articles are written |
 | `autopilot.config.json` | Site URL, money pages, categories, author, word range, link budget, the approved call to action |
-| `rules/blog-posts.md` | Content policy: structure, headings, openings, closings, link rules, cover rules |
-| `skills/kie-image-gen/SKILL.md` | The cover house style. Read this before changing how covers look |
-| `memory/topic-backlog.template.md` | The topic backlog, one cluster per money page |
+| `.claude/rules/blog-posts.md` | Content policy: structure, headings, openings, closings, link rules, cover rules |
+| `.claude/skills/kie-image-gen/SKILL.md` | The cover house style. Read this before changing how covers look |
+| `memory/autopilot/topic-backlog.md` | The topic backlog, one cluster per money page |
 
 ## Configuration reference
 

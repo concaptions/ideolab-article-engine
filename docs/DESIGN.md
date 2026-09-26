@@ -18,13 +18,13 @@ Four layers, each replaceable without touching the others:
 
 1. **Config** (`autopilot.config.json`) - the only file that knows which site
    this is. Brand, paths, money pages, categories, audience, thresholds.
-2. **Policy** (`rules/blog-posts.md`) - what a good post looks like:
+2. **Policy** (`.claude/rules/blog-posts.md`) - what a good post looks like:
    structure, voice, citation rules, mobile rules. Prose for the agent, refined
    per site over time.
-3. **Engine** (`skills/blog-autopilot/SKILL.md` + `scripts/`) - the
+3. **Engine** (`.claude/skills/blog-autopilot/SKILL.md` + `scripts/`) - the
    run loop: pick topic, research, write, gate, publish, verify, notify, ledger.
    Identical across sites.
-4. **Runner** (`scripts/run.sh`) - one run, start to finish.
+4. **Runner** (`scripts/blog-autopilot/run.sh`) - one run, start to finish.
 
 ## Decisions worth keeping
 
@@ -38,7 +38,7 @@ Four layers, each replaceable without touching the others:
   rewrite the same topic.
 - **The skill owns the push.** Verify-live and Slack announcement depend on the
   post being pushed; deferring the push to the runner created a race in an
-  earlier version. `run.sh`'s push is only a safety net.
+  earlier version. `scripts/blog-autopilot/run.sh`'s push is only a safety net.
 - **Ledger + topical-overlap check.** Exact-match dedup was not enough: the
   writer would happily produce "get tree service leads" a month after "tree
   service lead generation". The skill now compares search intent, not strings.
