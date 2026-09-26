@@ -75,6 +75,19 @@ at the start of every run, in this order:
 Only capabilities that appear in those files may be described. Nothing about the
 product is invented, and no result or testimonial is ever made up.
 
+## Three articles to write against
+
+`content/blog/` holds three finished articles with their covers. They are the
+reference for the shape the writing should take: how an article opens, how the
+headings carry the argument, where the one real example sits, and how it closes.
+
+Read one before writing a new one. If a draft could swap its headings with one of
+these and nobody would notice, the draft is wrong.
+
+Their covers are in `content/blog/images/`. They are the look every later cover
+should match, and the prompts that made them are in
+`.claude/skills/kie-image-gen/SKILL.md`.
+
 ## What to edit
 
 | File | Why |
