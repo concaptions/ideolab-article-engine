@@ -9,6 +9,17 @@ voice, and quality. Where the two disagree, the config wins.
 > this system was built against. If your blog renders differently, edit those
 > sections to match - the autopilot follows what is written here.
 
+## The master prompt (read first, every run)
+
+`prompt/article-master-prompt.md` is David's writing prompt. It is the authority on
+how an article is written: the editorial standard, the title rules, the research
+and citation discipline, the heading path, the review passes.
+
+Read it before this file. Where the two disagree, the master prompt wins and this
+file is wrong and should be corrected.
+
+It is edited by hand. When it changes, the next run picks the change up on its own.
+
 ## IdeoLab knowledge base (read before anything else)
 
 This blog is written from David's two documents, converted to markdown in

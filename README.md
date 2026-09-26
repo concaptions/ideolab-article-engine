@@ -13,12 +13,14 @@ Everything specific to IdeoLab lives in two places: `autopilot.config.json` and
 
 - Node 20 or newer
 - Claude Code
-- A folder with a `samples/` or `content/blog/` directory for the articles to land in
+- Nothing else. Articles land in `content/blog/`, which is already here
 
 ```bash
 npm install
-cp autopilot.config.example.json autopilot.config.json
 ```
+
+`autopilot.config.json` is already filled in for IdeoLab. `autopilot.config.example.json`
+is there as a reference for what each key does.
 
 Then open the folder in VS Code with Claude Code and run:
 
@@ -46,6 +48,17 @@ That writes one full draft, prints the validator result, and publishes nothing.
 Every integration degrades on its own. No DataForSEO means the backlog is used.
 No Kie.ai key means no cover. The article is still written either way.
 
+## The master prompt
+
+`prompt/article-master-prompt.md` is the writing standard. It decides how an article
+is written: the editorial bar, the title rules, the research and citation discipline,
+the heading path and the review passes.
+
+**This is the file to edit when the writing needs to change.** It is read at the start
+of every run and it outranks `.claude/rules/blog-posts.md` on anything to do with how
+the article itself is written. Change it, save it, and the next run follows the new
+version. Nothing else needs touching.
+
 ## The knowledge base
 
 `knowledge/` is what makes the articles IdeoLab's rather than generic. It is read
@@ -66,6 +79,7 @@ product is invented, and no result or testimonial is ever made up.
 
 | File | Why |
 |---|---|
+| `prompt/article-master-prompt.md` | The writing standard. Edit this to change how articles are written |
 | `autopilot.config.json` | Site URL, money pages, categories, author, word range, link budget, the approved call to action |
 | `rules/blog-posts.md` | Content policy: structure, headings, openings, closings, link rules, cover rules |
 | `skills/kie-image-gen/SKILL.md` | The cover house style. Read this before changing how covers look |

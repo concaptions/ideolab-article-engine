@@ -13,6 +13,11 @@ every post funnels to one of `content.moneyPages` via contextual internal links.
 If `--dry-run` is in $ARGUMENTS, do every step EXCEPT setting `status: published`,
 pushing, and posting to Slack - leave the post as a draft and print the validator JSON.
 
+## 0. Load the prompt and the config
+
+Read `prompt/article-master-prompt.md` first. It is the writing standard and it
+outranks everything else in this skill about how the article itself is written.
+
 ## 0. Load config
 
 Read `autopilot.config.json`. Wherever this skill says `<config.X>`, substitute the
