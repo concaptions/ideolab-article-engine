@@ -1,0 +1,71 @@
+name: Daily articles
+
+# Two workers off one repo, one per site, as agreed. They run in parallel and
+# one failing does not stop the other.
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      site:
+        description: Run one site only, or both
+        type: choice
+        options: [both, ideolab, strategicmarketer]
+        default: both
+      status:
+        description: published or draft
+        type: choice
+        options: [published, draft]
+        default: published
+
+jobs:
+  article:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        site: [ideolab, strategicmarketer]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Skip the sites this run does not want
+        id: gate
+        run: |
+          want="${{ github.event.inputs.site || 'both' }}"
+          if [ "$want" = "both" ] || [ "$want" = "${{ matrix.site }}" ]; then
+            echo "run=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=no" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Write and publish one article
+        if: steps.gate.outputs.run == 'yes'
+        env:
+          IDEOLAB_API_KEY: ${{ secrets.IDEOLAB_API_KEY }}
+          STRATEGIC_API_KEY: ${{ secrets.STRATEGIC_API_KEY }}
+          DATAFORSEO_LOGIN: ${{ secrets.DATAFORSEO_LOGIN }}
+          DATAFORSEO_PASSWORD: ${{ secrets.DATAFORSEO_PASSWORD }}
+          KIE_AI_API_KEY: ${{ secrets.KIE_AI_API_KEY }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+          WRITER_PROVIDER: ${{ secrets.WRITER_PROVIDER }}
+          WRITER_MODEL: ${{ secrets.WRITER_MODEL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: node scripts/engine/run.mjs --site ${{ matrix.site }} --status ${{ github.event.inputs.status || 'published' }}
+
+      - name: Keep the cover that was generated
+        if: steps.gate.outputs.run == 'yes'
+        uses: actions/upload-artifact@v4
+        with:
+          name: cover-${{ matrix.site }}
+          path: content/*/images/*.png
+          if-no-files-found: ignore
