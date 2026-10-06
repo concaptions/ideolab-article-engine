@@ -41,6 +41,13 @@ export function buildWriterPrompt(site, { keyword, volume, difficulty, intent, t
     '- the offering appears before the 60% mark with the raw url in angle brackets: <' + site.cta.url + '>',
     '- the offering is called "' + site.cta.label + '". Never use the url or the last part of it as if it were a product name,',
     '  and never invent a feature. If you are not certain the product does something, do not say it does',
+    ...(site.cta.plans?.length ? [
+      '- name a paid plan once, in the call to action panel, with its raw url in angle brackets. Pick the one that',
+      '  fits what the article taught, and write the sentence that earns it first. A reader who has just been shown',
+      '  how to do the thing is allowed to be told what it costs to keep doing it. The plans are:',
+      ...site.cta.plans.map(p => '    ' + p.name + ', ' + p.price + ', <' + p.url + '>'),
+      '  Do not list both plans, do not build a pricing table, and do not mention a price anywhere else in the article',
+    ] : []),
     '- a call to action panel before the FAQ heading',
     '- one or two links to articles that already exist on this site, chosen from the list below',
     '- no em dashes or en dashes anywhere',

@@ -105,6 +105,14 @@ const CONNECTIVES = new Set([
 
 const QUESTIONS = new Set(['how', 'what', 'why', 'when', 'where', 'which', 'who'])
 
+// English puts the adjective in front of the noun. DataForSEO reports both
+// orders, so "invoice simple" and "simple invoice" arrive together and the
+// wrong one was leading the article.
+const ADJECTIVES = new Set([
+  'simple', 'free', 'easy', 'quick', 'fast', 'short', 'long', 'best', 'good', 'great',
+  'modern', 'creative', 'professional', 'clean', 'effective', 'digital', 'online', 'small', 'local',
+])
+
 // Five tests, and a keyword has to pass all five.
 //
 // 1. It may not open or close on a bare connective.
@@ -132,6 +140,11 @@ function relevant(keyword, topic) {
   // notes" are the same searches with the noun phrase turned inside out, and
   // the house rule puts the exact keyword at the front of the title, so an
   // inverted keyword becomes an inverted headline.
+  //
+  // Letting anything else through was tried on 6 October: allowing a
+  // preposition free prefix so "simple invoice" could lead, which also let in
+  // "what invoice" and "what are sales funnel". The ordering rule in awkward()
+  // fixes the adjective case without opening the gate.
   if (at !== 0 && !QUESTIONS.has(k[0])) return false
 
   if (new Set(ks).size !== ks.length) return false
@@ -239,6 +252,14 @@ function lead(keyword, topics) {
   return best
 }
 
+// An adjective sitting after the noun it describes. "invoice simple" is the
+// search; "simple invoice" is the sentence, and the title is a sentence.
+function awkward(keyword, topics) {
+  const at = lead(keyword, topics)
+  if (!Number.isFinite(at)) return 0
+  return words(keyword).some((w, i) => i > at && ADJECTIVES.has(w)) ? 1 : 0
+}
+
 function cluster(candidates, topics = []) {
   const groups = new Map()
   for (const c of candidates) {
@@ -248,8 +269,13 @@ function cluster(candidates, topics = []) {
     groups.set(key, g)
   }
   return [...groups.values()].map(g => {
+    // Lead first, then word order. Putting awkward() first was tried and it
+    // promoted "what invoice" over "invoice simple", because a question form
+    // carries no adjective to be out of place. Leading with the subject is the
+    // stronger rule; the adjective check only breaks ties behind it.
     g.sort((a, b) =>
       lead(a.keyword, topics) - lead(b.keyword, topics) ||
+      awkward(a.keyword, topics) - awkward(b.keyword, topics) ||
       words(a.keyword).length - words(b.keyword).length ||
       b.volume - a.volume ||
       (a.difficulty ?? 99) - (b.difficulty ?? 99))

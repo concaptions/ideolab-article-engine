@@ -31,6 +31,15 @@ export async function qa(md, { site, keyword }) {
 
   if (!md.includes(site.cta.url)) errors.push('the site CTA url ' + site.cta.url + ' does not appear')
 
+  // Shahzaib asked for the paid order forms to be used, not only the trial.
+  // One of them, whichever fits the article, and only one.
+  const plans = site.cta.plans || []
+  if (plans.length) {
+    const used = plans.filter(p => md.includes(p.url))
+    if (!used.length) errors.push('no paid plan link, expected one of ' + plans.map(p => p.url).join(' or '))
+    if (used.length > 1) errors.push('both paid plan links appear, the article should name one: ' + used.map(p => p.url).join(', '))
+  }
+
   const links = [...md.matchAll(/\((https?:\/\/[^)\s]+)\)|<(https?:\/\/[^>]+)>/g)].map(m => m[1] || m[2])
   const seen = new Set()
   for (const u of links) {

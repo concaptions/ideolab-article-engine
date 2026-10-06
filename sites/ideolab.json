@@ -17,8 +17,18 @@
   "cta": {
     "label": "Start your free 7 day trial of IdeoLab",
     "url": "https://ideolab.ai/TrialBuild",
-    "starter": "https://ideolab.ai/StartPub",
-    "agency": "https://ideolab.ai/BuildPub"
+    "plans": [
+      {
+        "name": "IdeoLab Starter",
+        "price": "$39 a month",
+        "url": "https://ideolab.ai/StartPub"
+      },
+      {
+        "name": "IdeoLab Builder",
+        "price": "$99 a month",
+        "url": "https://ideolab.ai/BuildPub"
+      }
+    ]
   },
   "cover": {
     "styleBlock": "Wide 16:9 landscape studio photograph on a pale ice blue (#DCE9F2) seamless surface. {OBJECTS}. Soft even studio light from the upper left, gentle contact shadows, generous empty background. Realistic photography, matte surfaces, no glare. Palette limited to pale ice blue, white, navy #0B2559 and one medium blue accent #2F7CF0. No orange, no wood, no green. No text, no letters, no numbers, no logos, no people, no hands.",
