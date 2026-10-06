@@ -5,7 +5,10 @@ name: Daily articles
 
 on:
   schedule:
-    - cron: '0 6 * * *'
+    # 06:17 UTC is 11:17 in Pakistan. Deliberately not on the hour: GitHub runs
+    # every repository's hourly schedules in the same burst and drops or delays
+    # what it cannot fit, and 0 6 did not fire at all on 6 October 2026.
+    - cron: '17 6 * * *'
   workflow_dispatch:
     inputs:
       site:
@@ -44,6 +47,20 @@ jobs:
           else
             echo "run=no" >> "$GITHUB_OUTPUT"
           fi
+
+      # The pool is one DataForSEO call per topic, thirty of them, about eighty
+      # cents a site. It is good for a week, so it is carried between runs
+      # instead of being bought again every morning. The key carries the site
+      # config hash, so editing the topic list buys a fresh pool on the next run
+      # and nothing else does.
+      - name: Reuse the keyword pool between runs
+        if: steps.gate.outputs.run == 'yes'
+        uses: actions/cache@v4
+        with:
+          path: memory/autopilot/keyword-pool-${{ matrix.site }}.json
+          key: keyword-pool-${{ matrix.site }}-${{ hashFiles(format('sites/{0}.json', matrix.site)) }}-${{ github.run_id }}
+          restore-keys: |
+            keyword-pool-${{ matrix.site }}-${{ hashFiles(format('sites/{0}.json', matrix.site)) }}-
 
       - name: Write and publish one article
         if: steps.gate.outputs.run == 'yes'

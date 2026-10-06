@@ -24,16 +24,45 @@
     "styleBlock": "Wide 16:9 landscape studio photograph on a pale ice blue (#DCE9F2) seamless surface. {OBJECTS}. Soft even studio light from the upper left, gentle contact shadows, generous empty background. Realistic photography, matte surfaces, no glare. Palette limited to pale ice blue, white, navy #0B2559 and one medium blue accent #2F7CF0. No orange, no wood, no green. No text, no letters, no numbers, no logos, no people, no hands.",
     "aspect": "16:9"
   },
-  "keywordSeeds": [
-    "flyer design",
+  "topics": [
+    "business proposal",
     "pitch deck",
-    "press release",
+    "case study",
+    "flyer design",
     "content calendar",
-    "meeting notes",
     "email newsletter",
+    "press release",
+    "meeting notes",
     "video script",
     "brochure design",
-    "ad copy",
-    "business cards"
-  ]
+    "mind map",
+    "infographic",
+    "landing page",
+    "market research",
+    "social media captions",
+    "product photos",
+    "customer reviews",
+    "workflow automation",
+    "blog post",
+    "product description",
+    "sales email",
+    "cold email",
+    "invoice",
+    "survey",
+    "testimonial",
+    "job description",
+    "onboarding checklist",
+    "webinar",
+    "customer persona",
+    "competitor analysis"
+  ],
+  "seo": {
+    "minVolume": 200,
+    "maxDifficulty": 35,
+    "intents": [
+      "informational"
+    ]
+  },
+  "locationCode": 2840,
+  "languageCode": "en"
 }

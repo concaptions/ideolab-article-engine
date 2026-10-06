@@ -37,6 +37,21 @@ function frontMatter(md) {
   return { meta, body: md.slice(m[0].length) }
 }
 
+// A model sometimes wraps its answer in a code fence. Strip it rather than
+// failing on something that is only packaging.
+function unfence(md) {
+  const m = /^\s*```(?:markdown|md)?\n([\s\S]*?)\n```\s*$/.exec(md.trim())
+  return m ? m[1] : md
+}
+
+function saveDraft(site, slug, md) {
+  const dir = path.join(ROOT, site.contentDir, 'drafts')
+  fs.mkdirSync(dir, { recursive: true })
+  const file = path.join(dir, (slug || 'untitled') + '.md')
+  fs.writeFileSync(file, md)
+  return file
+}
+
 function record(entry) {
   const all = fs.existsSync(LEDGER) ? JSON.parse(fs.readFileSync(LEDGER, 'utf8')) : []
   all.push(entry)
@@ -48,6 +63,7 @@ const site = loadSite(args.site)
 log('site', site.name + '  ' + site.siteUrl)
 
 let keyword = args.keyword || null
+let topic = null
 let md
 
 if (args['from-file']) {
@@ -58,27 +74,54 @@ if (args['from-file']) {
 } else {
   const picked = await pickKeyword(site)
   keyword = picked.keyword
-  const existing = await existingPosts(site)
-  md = await writeArticle(site, { ...picked, existing })
+  topic = { ...picked, existing: await existingPosts(site) }
+  md = await writeArticle(site, topic)
 }
 
-const { meta, body } = frontMatter(md)
-const title = (body.match(/^# (.+)$/m) || [])[1]
-if (!title) fail('write', 'the article has no H1 title')
+// Parse, check, and when the model wrote it, give it one chance to fix what the
+// checks rejected. The checks are the house rules, so a retry is cheaper than a
+// morning spent correcting an article by hand.
+let parsed, report
+for (let attempt = 1; attempt <= 2; attempt++) {
+  md = unfence(md)
+  parsed = frontMatter(md)
+  const title = (parsed.body.match(/^# (.+)$/m) || [])[1]
+  const slug = args.slug || (title ? slugify(title) : null)
+  const file = saveDraft(site, slug, md)
+  if (attempt === 1) log('write', 'saved ' + path.relative(ROOT, file))
+
+  if (!title) {
+    if (attempt === 2 || !topic) fail('write', 'the article has no H1 title')
+    log('write', 'no H1 title, asking for it again')
+    md = await writeArticle(site, topic, 'Your previous answer had no H1 title. Write the article again in full, starting with the front matter and then a single H1.')
+    continue
+  }
+
+  report = await qa(parsed.body, { site, keyword })
+  log('qa', report.words + ' words, ' + report.h2 + ' H2, ' + report.faqs + ' FAQs, ' + report.links + ' links checked')
+  for (const w of report.warn) log('qa', 'warning  ' + w)
+  if (!report.errors.length) break
+
+  for (const e of report.errors) console.error('[qa       ] ' + e)
+  if (attempt === 2 || !topic) fail('qa', report.errors.length + ' problem(s), nothing published')
+
+  log('qa', 'rewriting once to fix the above')
+  md = await writeArticle(site, topic, [
+    'Your previous draft was rejected by the checks below. Write the whole article again and fix every one of them.',
+    'Keep the front matter. Count the words before you answer: the body has to land between 1200 and 1800.',
+    'Return markdown only, no code fence around it.',
+    '',
+    ...report.errors.map(e => '- ' + e),
+  ].join('\n'))
+}
+
+const title = (parsed.body.match(/^# (.+)$/m) || [])[1]
 const slug = args.slug || slugify(title)
-const excerpt = meta.excerpt || args.excerpt
-const category = meta.category || args.category || site.defaultCategory
-const coverObjects = meta.cover_objects || args.cover
+const excerpt = parsed.meta.excerpt || args.excerpt
+const category = parsed.meta.category || args.category || site.defaultCategory
+const coverObjects = parsed.meta.cover_objects || args.cover
 if (!excerpt) fail('write', 'no excerpt. Put it in the front matter or pass --excerpt')
 if (!coverObjects) fail('cover', 'no cover_objects. Put it in the front matter or pass --cover')
-
-const report = await qa(body, { site, keyword })
-log('qa', report.words + ' words, ' + report.h2 + ' H2, ' + report.faqs + ' FAQs, ' + report.links + ' links checked')
-for (const w of report.warn) log('qa', 'warning  ' + w)
-if (report.errors.length) {
-  for (const e of report.errors) console.error('[qa       ] ' + e)
-  fail('qa', report.errors.length + ' problem(s), nothing published')
-}
 
 log('cover', 'credit before ' + (await credit()))
 const file = await generateCover(site, coverObjects, slug)
@@ -89,7 +132,7 @@ if (args['dry-run']) {
   process.exit(0)
 }
 
-const content = body.replace(/^# .+\n+/m, '')
+const content = parsed.body.replace(/^# .+\n+/m, '')
 const posted = await publishPost(site, {
   title, slug, excerpt, content, category, coverUrl,
   coverAlt: coverObjects.split('.')[0],

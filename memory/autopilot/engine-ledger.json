@@ -9,5 +9,27 @@
     "status": "published",
     "url": "https://ideolab.ai/blog/posts/case-study-turn-one-happy-customer-into-your-best-sales-page.html",
     "cover": "https://www.vibepages.ai/api/asset/5e28536c-e318-4707-a389-081b4ad457e0/blog-external-9cbc51cd-f1b9-4fb6-bae7-b1b633cd1d04.jpg"
+  },
+  {
+    "site": "strategicmarketer",
+    "slug": "prompt-engineering-write-the-instruction-once-and-reuse-it",
+    "title": "Prompt Engineering: Write the Instruction Once and Reuse It",
+    "keyword": "prompt engineering",
+    "category": "Practical AI",
+    "id": "18f41590-984f-49b8-9b90-2dac8ddefa6f",
+    "status": "published",
+    "url": "https://strategicmarketer.com/blog/posts/prompt-engineering-write-the-instruction-once-and-reuse-it.html",
+    "cover": "https://www.vibepages.ai/api/asset/4df8dab1-97d6-47c7-8e7f-5b33dca858e5/blog-external-028d5ffb-20ef-4ceb-b2bb-1fa2cb38986a.jpg"
+  },
+  {
+    "site": "ideolab",
+    "slug": "pitch-deck-win-a-clearer-yes-from-the-right-people",
+    "title": "Pitch Deck: Win a Clearer Yes From the Right People",
+    "keyword": "pitch deck",
+    "category": "Business Knowledge",
+    "id": "5b5929e2-e1f8-48d0-bc4b-771569b30380",
+    "status": "published",
+    "url": "https://ideolab.ai/blog/posts/pitch-deck-win-a-clearer-yes-from-the-right-people.html",
+    "cover": "https://www.vibepages.ai/api/asset/5e28536c-e318-4707-a389-081b4ad457e0/blog-external-77d2603d-a985-4a26-8b71-527f91a2d059.jpg"
   }
 ]

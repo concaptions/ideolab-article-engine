@@ -2,3 +2,7 @@ node_modules/
 .env
 .DS_Store
 content/*/images/
+
+# The keyword pool is a cache, about a megabyte, rebuilt from DataForSEO.
+# CI carries it with actions/cache instead, so it does not belong in history.
+memory/autopilot/keyword-pool-*.json

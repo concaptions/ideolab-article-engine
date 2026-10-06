@@ -23,7 +23,11 @@
     "styleBlock": "Wide 16:9 landscape studio photograph on a seamless dark navy background shading from #0a0f1e at the top to #141c33 at the base. {OBJECTS}, rendered in matte brushed gold #e9b95c. Soft directional light from the upper left, restrained specular highlights, deep soft shadows, generous empty navy space. Realistic photography. Palette limited to dark navy and brushed gold. No text, no letters, no numbers, no logos, no people, no hands, no wood, no daylight.",
     "aspect": "16:9"
   },
-  "keywordSeeds": [
+  "topics": [
+    "ai consulting",
+    "ai implementation",
+    "ai training",
+    "marketing automation",
     "lead generation",
     "business process automation",
     "ai strategy",
@@ -31,6 +35,33 @@
     "crm automation",
     "ai tools for small business",
     "chatbot for business",
-    "digital transformation"
-  ]
+    "standard operating procedures",
+    "prompt engineering",
+    "ai content creation",
+    "workflow automation",
+    "sales automation",
+    "email marketing",
+    "customer onboarding",
+    "business process improvement",
+    "sales funnel",
+    "lead nurturing",
+    "marketing analytics",
+    "content strategy",
+    "brand voice",
+    "competitor analysis",
+    "market segmentation",
+    "knowledge base",
+    "internal documentation",
+    "employee onboarding",
+    "project management"
+  ],
+  "seo": {
+    "minVolume": 200,
+    "maxDifficulty": 35,
+    "intents": [
+      "informational"
+    ]
+  },
+  "locationCode": 2840,
+  "languageCode": "en"
 }
