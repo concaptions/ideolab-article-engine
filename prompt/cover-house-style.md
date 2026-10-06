@@ -24,20 +24,34 @@ crop to 16:9, so anything square loses its top and bottom.
 
 ## Choosing the object
 
-The object is not decoration. Take the mechanism the article actually
-describes, then render that mechanism as a physical thing.
+Start from the thing the article is about, not from a metaphor for it.
 
-- Ask what the article asks the reader to do, then what carries that work.
-- An article about recurring work gets the machine that repeats. An article
-  about choosing between options gets the options with one of them marked. An
-  article about something running without a person gets the thing still running
-  in an empty frame.
-- The object has to perform the article's verb. If it is only sitting there,
-  the cover is decoration. A stencil repeats, a domino sets off the next one, a
-  tap releases at a fixed interval.
-- If the only idea is abstract, the cover is wrong. Plain boxes, plain spheres
-  and plain abstract shapes mean nothing and have been rejected before.
-- Both sites use this same rule. Only the palette and the lighting differ.
+**1. Name the object from the article's own subject.** An article about
+invoices gets an invoice. An article about a pitch deck gets slides. An article
+about a job description gets a printed job posting. The reader has to be able
+to name what they are looking at in one word, without reading the title first.
+
+**2. Then give it the article's verb to perform.** The invoice is being
+stamped paid. The slides are being laid out in order with one pulled forward.
+The job posting is being marked up. Mid action, caught in the middle of the
+work, never sitting still. A thing that is only lying there is decoration.
+
+**3. Never invent a machine.** This is the mistake that produced the covers
+rejected on 6 October 2026. The brief asked for a mechanism and the writer
+invented one: "a navy stencil repeats a clean invoice layout onto cream
+sheets", "a white card feeder is arranging cream slide cards". No such objects
+exist, so the image came back as unreadable shapes. Banned outright: stencil,
+feeder, dispenser, apparatus, rig, contraption, machine, press, and anything
+else a reader could not buy or has never seen.
+
+**4. The old abstractions stay banned.** Plain boxes, plain spheres, chips,
+switches, envelopes and blank cards mean nothing and have been rejected before.
+
+**5. If the subject has no physical form**, use the document, tool or paper the
+work is actually done on. Marketing automation is a scheduled message on a
+screen, not a flowing river of light.
+
+Both sites use this same rule. Only the palette and the lighting differ.
 
 ## Site block: IdeoLab
 
@@ -74,8 +88,8 @@ Worked examples:
 ## Site block: Strategic Marketer
 
 Dark, premium, technical. The object is chosen exactly as it is for IdeoLab, by
-taking the mechanism the article describes. Only the palette and the lighting
-change between the two sites. A machine part is allowed when the article is
+naming the real thing the article is about and then giving it the article's
+verb. Only the palette and the lighting change between the two sites. A machine part is allowed when the article is
 about one, it is not the default.
 
 ```
@@ -112,13 +126,18 @@ Worked examples:
   traces under the lens visibly larger than those around it.
 - Something that keeps running after the consultant leaves: a gold module seated
   in its socket with one lit indicator and traces continuing off frame.
-- Prompt engineering, write it once and reuse it: a gold stencil with one shape
-  cut out of it, and three identical shapes produced through it lying in an
-  evenly spaced row beside it.
-- Marketing automation, one trigger and the rest follows: a row of upright gold
-  dominoes with the first tipping into the second and the rest still standing.
-- Marketing automation, second composition: a gold tap with three drops falling
-  from it at perfectly even intervals.
+- Prompt engineering, write it once and reuse it: a gold index card carrying a
+  written instruction, being copied onto two more cards beside it that already
+  carry the same lines.
+- Marketing automation, one trigger and the rest follows: a gold phone handset
+  with a sent message on its face and two more messages queued behind it.
+- Employee onboarding: a gold checklist on a clipboard with the first three
+  lines ticked and the pen still resting on the fourth.
+
+Note on these, 6 October 2026: the stencil, the dominoes and the tap that used
+to be listed here are gone. They are metaphors for a mechanism, not the thing
+the article is about, and the writer copied the word "stencil" straight into an
+invoice cover. Rule 3 above bans them now.
 
 ## Check before publishing
 
