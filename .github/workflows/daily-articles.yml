@@ -5,14 +5,16 @@ name: Daily articles
 
 on:
   schedule:
-    # TEMPORARY, 6 October 2026. 10:08 UTC is a one off, to watch the schedule
-    # fire end to end, because it never has. Put it back to '17 6 * * *', which
-    # is 11:17 in Pakistan, as soon as the test run has been seen.
+    # TEMPORARY, 6 October 2026. Second attempt at watching the schedule fire,
+    # because it never has. 06:00 was missed and so was 10:08, the latter set
+    # only twenty one minutes ahead, which may not be long enough for a changed
+    # cron to take effect. This one is set thirty seven minutes ahead. Put it
+    # back to '17 6 * * *', which is 11:17 in Pakistan, once it has been seen.
     #
     # Deliberately not on the hour, either way: GitHub runs every repository's
     # hourly schedules in the same burst and drops or delays what it cannot
     # fit, and 0 6 did not fire at all this morning.
-    - cron: '8 10 * * *'
+    - cron: '3 11 * * *'
   workflow_dispatch:
     inputs:
       site:
