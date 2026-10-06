@@ -81,8 +81,13 @@ if (args['from-file']) {
 // Parse, check, and when the model wrote it, give it one chance to fix what the
 // checks rejected. The checks are the house rules, so a retry is cheaper than a
 // morning spent correcting an article by hand.
+// Three attempts, not two. On 6 October the IdeoLab run came back at 1974
+// words, was told to fix it, and came back at 1938: the model trims a little
+// and stops. A second correction, this time naming the number of words to cut,
+// is what actually brings it under the ceiling.
+const ATTEMPTS = 3
 let parsed, report
-for (let attempt = 1; attempt <= 2; attempt++) {
+for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
   md = unfence(md)
   parsed = frontMatter(md)
   const title = (parsed.body.match(/^# (.+)$/m) || [])[1]
@@ -91,7 +96,7 @@ for (let attempt = 1; attempt <= 2; attempt++) {
   if (attempt === 1) log('write', 'saved ' + path.relative(ROOT, file))
 
   if (!title) {
-    if (attempt === 2 || !topic) fail('write', 'the article has no H1 title')
+    if (attempt === ATTEMPTS || !topic) fail('write', 'the article has no H1 title')
     log('write', 'no H1 title, asking for it again')
     md = await writeArticle(site, topic, 'Your previous answer had no H1 title. Write the article again in full, starting with the front matter and then a single H1.')
     continue
@@ -103,13 +108,21 @@ for (let attempt = 1; attempt <= 2; attempt++) {
   if (!report.errors.length) break
 
   for (const e of report.errors) console.error('[qa       ] ' + e)
-  if (attempt === 2 || !topic) fail('qa', report.errors.length + ' problem(s), nothing published')
+  if (attempt === ATTEMPTS || !topic) fail('qa', report.errors.length + ' problem(s), nothing published')
 
-  log('qa', 'rewriting once to fix the above')
+  // "Make it shorter" gets a draft thirty words shorter. A number, and an
+  // instruction to drop a whole section rather than shave every paragraph,
+  // gets one that actually fits.
+  const over = report.words > 1800 ? report.words - 1700 : 0
+  log('qa', 'rewriting to fix the above, attempt ' + (attempt + 1) + ' of ' + ATTEMPTS)
   md = await writeArticle(site, topic, [
     'Your previous draft was rejected by the checks below. Write the whole article again and fix every one of them.',
-    'Keep the front matter. Count the words before you answer: the body has to land between 1200 and 1800.',
-    'Return markdown only, no code fence around it.',
+    over
+      ? 'That draft ran to ' + report.words + ' words. The ceiling is 1800 and you came in over it. Cut ' + over +
+        ' words. Do it by deleting the two weakest H2 sections outright, not by shaving a line off every paragraph, ' +
+        'which is what you did last time and it did not work. Keep the Quick answer block, the call to action and all the FAQs.'
+      : 'Keep the body between 1200 and 1800 words.',
+    'Keep the front matter. Return markdown only, no code fence around it.',
     '',
     ...report.errors.map(e => '- ' + e),
   ].join('\n'))
