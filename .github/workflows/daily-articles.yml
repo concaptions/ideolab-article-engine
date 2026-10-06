@@ -5,10 +5,14 @@ name: Daily articles
 
 on:
   schedule:
-    # 06:17 UTC is 11:17 in Pakistan. Deliberately not on the hour: GitHub runs
-    # every repository's hourly schedules in the same burst and drops or delays
-    # what it cannot fit, and 0 6 did not fire at all on 6 October 2026.
-    - cron: '17 6 * * *'
+    # TEMPORARY, 6 October 2026. 10:08 UTC is a one off, to watch the schedule
+    # fire end to end, because it never has. Put it back to '17 6 * * *', which
+    # is 11:17 in Pakistan, as soon as the test run has been seen.
+    #
+    # Deliberately not on the hour, either way: GitHub runs every repository's
+    # hourly schedules in the same burst and drops or delays what it cannot
+    # fit, and 0 6 did not fire at all this morning.
+    - cron: '8 10 * * *'
   workflow_dispatch:
     inputs:
       site:

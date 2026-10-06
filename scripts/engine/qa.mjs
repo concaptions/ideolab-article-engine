@@ -11,8 +11,25 @@ export async function qa(md, { site, keyword }) {
   const faqs = (faqSection.match(/^\*\*.+\?\*\*$/gm) || []).length
 
   if (!title) errors.push('no H1 title')
-  if (keyword && !title.toLowerCase().startsWith(keyword.toLowerCase())) {
-    errors.push('title does not open with the exact keyword "' + keyword + '"')
+  // The keyword has to open the title, but it has to open it in English.
+  // DataForSEO hands back stripped forms like "what are sales funnel", and
+  // demanding that string verbatim produced an ungrammatical headline. So the
+  // test is on the words, in order, allowing a plural, an article and the verb
+  // between them. "What Is a Sales Funnel" passes for "what are sales funnel";
+  // a title that reorders the words or buries them still fails.
+  const filler = new Set(['a', 'an', 'the', 'is', 'are', 'was', 'were', 'do', 'does'])
+  const norm = s => s.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean)
+    .map(w => (w.length > 3 && w.endsWith('s') ? w.slice(0, -1) : w))
+  const wanted = norm(keyword || '').filter(w => !filler.has(w))
+  const opening = norm(title.split(':')[0]).filter(w => !filler.has(w))
+  // Order is not enforced either, for the same reason: the topic is "invoice"
+  // and DataForSEO spells the search "invoice simple", but the headline is
+  // "Simple Invoice". What matters is that the keyword fills the opening of
+  // the title, not that it is copied letter for letter.
+  const head = new Set(opening.slice(0, wanted.length))
+  const opensWithKeyword = wanted.length && wanted.every(w => head.has(w))
+  if (keyword && !opensWithKeyword) {
+    errors.push('title does not open with the keyword "' + keyword + '", it opens with "' + title.split(':')[0].trim() + '"')
   }
   if (words < 1200 || words > 1800) errors.push('word count ' + words + ', must be 1200 to 1800')
   if (h2 < 7 || h2 > 11) warn.push('H2 count ' + h2 + ', expected 7 to 11 including the FAQ heading')
