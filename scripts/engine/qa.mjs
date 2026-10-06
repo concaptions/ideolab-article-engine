@@ -42,9 +42,17 @@ export async function qa(md, { site, keyword }) {
   const gov = md.match(/https?:\/\/[^\s)]*\.gov\b[^\s)]*/g) || []
   if (gov.length) errors.push('government links are banned: ' + gov.join(', '))
 
-  const rawCta = md.search(/<https?:\/\/[^>]+>/)
-  if (rawCta === -1) errors.push('no raw CTA url in angle brackets')
-  else if (rawCta / md.length > 0.6) errors.push('offering appears at ' + Math.round((rawCta / md.length) * 100) + '%, must be before 60%')
+  // The CTA used to be demanded as a bare url in angle brackets, which is how it
+  // was easy to find. Markdown renders that as the address itself, so the live
+  // article carried "https://ideolab.ai/TrialBuild" in the middle of a sentence
+  // while an older hand written one carried the offer's name. Now it has to be a
+  // real link, and a printed address is an error rather than the requirement.
+  const ctaAt = md.indexOf('](' + site.cta.url + ')')
+  if (ctaAt === -1) errors.push('the offering is not a markdown link to ' + site.cta.url)
+  else if (ctaAt / md.length > 0.6) errors.push('offering appears at ' + Math.round((ctaAt / md.length) * 100) + '%, must be before 60%')
+
+  const bare = md.match(/<https?:\/\/[^>]+>/g) || []
+  if (bare.length) errors.push(bare.length + ' url(s) printed as text in angle brackets, every url belongs inside a markdown link: ' + bare.join(', '))
 
   if (!md.includes(site.cta.url)) errors.push('the site CTA url ' + site.cta.url + ' does not appear')
 
@@ -55,7 +63,16 @@ export async function qa(md, { site, keyword }) {
     const used = plans.filter(p => md.includes(p.url))
     if (!used.length) errors.push('no paid plan link, expected one of ' + plans.map(p => p.url).join(' or '))
     if (used.length > 1) errors.push('both paid plan links appear, the article should name one: ' + used.map(p => p.url).join(', '))
+    for (const p of used) {
+      if (!md.includes('](' + p.url + ')')) errors.push('the ' + p.name + ' url is printed rather than linked, write it as [' + p.name + ' is ' + p.price + '](' + p.url + ')')
+    }
   }
+
+  // An older article on IdeoLab told readers a plan came with 2,500 credits and
+  // another with 10,000. Neither figure appears in any knowledge file, so the
+  // model made them up and they went live on the client's site.
+  const credits = md.match(/[\d,]+\s+credits/gi) || []
+  if (credits.length) errors.push('credit counts are not in the knowledge files and must not be stated: ' + credits.join(', '))
 
   const links = [...md.matchAll(/\((https?:\/\/[^)\s]+)\)|<(https?:\/\/[^>]+)>/g)].map(m => m[1] || m[2])
   const seen = new Set()
