@@ -119,8 +119,12 @@ for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
     'Your previous draft was rejected by the checks below. Write the whole article again and fix every one of them.',
     over
       ? 'That draft ran to ' + report.words + ' words. The ceiling is 1800 and you came in over it. Cut ' + over +
-        ' words. Do it by deleting the two weakest H2 sections outright, not by shaving a line off every paragraph, ' +
-        'which is what you did last time and it did not work. Keep the Quick answer block, the call to action and all the FAQs.'
+        ' words. Count the H2 sections you wrote: if there are more than six teaching sections, delete the weakest ' +
+        'ones until exactly six are left, because the extra section is usually the whole problem. If there are ' +
+        'already six, then each one is running long, so cut whole paragraphs out of the longest sections until ' +
+        'every section is at or under 180 words. Do not shave a line off every paragraph, that is what you did ' +
+        'last time and it did not work. Keep the Quick answer block, the call to action and all the FAQs, and ' +
+        'keep every FAQ answer at or under 50 words.'
       : 'Keep the body between 1200 and 1800 words.',
     'Keep the front matter. Return markdown only, no code fence around it.',
     '',
