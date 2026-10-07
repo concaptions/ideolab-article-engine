@@ -18,6 +18,14 @@ crop to 16:9, so anything square loses its top and bottom.
 - One idea per cover. Two or three objects at most, never a collage.
 - Generous empty background. The title sits next to the image on the card, so
   the image needs quiet space rather than a full frame of detail.
+- The whole object stays inside the frame, with a clear margin of about a tenth
+  of the frame on all four sides. Nothing may touch an edge and nothing may run
+  off one. The listing card is two hundred pixels tall and crops a slice off the
+  top and the bottom, so a subject that already reaches an edge loses part of
+  itself twice. The Strategic Marketer cover on 7 October 2026 had the top bar
+  of its checklist cut off by the frame before the card touched it.
+- Centre the subject. The quiet space belongs around it, not banked up on one
+  side with the object crammed against the other.
 - Realistic studio photography. No illustration, no cartoon, no flat vector.
 - Keep the palette inside the site block. A colour that is not listed is a bug.
 - Two samples per article at most. Credits are not free.
@@ -97,8 +105,10 @@ Studio product photograph on a seamless dark navy background shading from
 #0a0f1e at the top to #141c33 at the base. {OBJECTS}, rendered in matte brushed
 gold, colour #e9b95c. Nothing else in the scene. Soft directional light from the
 upper left, soft contact shadows, matte finish with no glare or sparkle. Camera
-straight on at object height with the subject in the lower half. Generous empty
-navy space filling the upper half of the frame. Realistic studio photography.
+straight on at object height, framed so the entire object is visible with navy
+space on all four sides and no part of it touching or running off any edge.
+Subject centred in the lower half, generous empty navy space across the upper
+half of the frame. Realistic studio photography.
 Palette limited to dark navy and brushed gold. No text, no letters, no logos, no
 people, no wood, no office, no daylight. Wide 16:9 landscape composition.
 ```
@@ -142,6 +152,8 @@ invoice cover. Rule 3 above bans them now.
 ## Check before publishing
 
 - 16:9, and the subject survives a centre crop.
+- Nothing touches an edge. Look at all four sides before anything else, because
+  this is the one that has actually gone wrong on a live cover.
 - No readable text anywhere in the frame.
 - Every colour in the image is in the site block.
 - The object is the mechanism the article teaches, not a generic prop.
