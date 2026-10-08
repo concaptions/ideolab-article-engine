@@ -330,13 +330,22 @@ function writeProvenance(site, kept, dropped, when) {
 }
 
 export async function topUpTopics(site, { min = DEFAULT_MIN_IDEAS, force = false, dry = false, now = Date.now() } = {}) {
+  // Needed means the list is short and this run has to put something back. The
+  // difference matters at the bottom of this function: on an ordinary day adding
+  // nothing is the correct outcome, and on a day the list is running out it is a
+  // failure that has to be shouted about while there are still articles left to
+  // publish. Otherwise the list empties quietly and the first anybody hears of it
+  // is the morning nothing comes out.
+  let needed = force
+  let left = null
   if (!force) {
-    const left = await remainingIdeas(site, { now })
-    if (left.length >= min) {
-      log('topics', left.length + ' ideas left for ' + site.name + ', the floor is ' + min + ', nothing to do')
-      return { changed: false, left: left.length }
+    left = (await remainingIdeas(site, { now })).length
+    if (left >= min) {
+      log('topics', left + ' ideas left for ' + site.name + ', the floor is ' + min + ', nothing to do')
+      return { changed: false, left }
     }
-    log('topics', 'only ' + left.length + ' ideas left for ' + site.name + ', below the floor of ' + min + ', topping up')
+    needed = true
+    log('topics', 'only ' + left + ' ideas left for ' + site.name + ', below the floor of ' + min + ', topping up')
   }
 
   const current = site.topics || []
@@ -351,8 +360,16 @@ export async function topUpTopics(site, { min = DEFAULT_MIN_IDEAS, force = false
 
   const kept = await validate(site, fresh)
   if (!kept.length) {
+    if (needed && !dry) {
+      throw new Error(
+        site.name + ' is down to ' + (left === null ? 'the floor' : left + ' ideas') +
+        ' and this top up added none. Every phrase the documents produced was either already ' +
+        'on the list or had nothing searching for it. The articles will stop in a few days ' +
+        'unless the documents are extended or sites/' + site.key + '.json is widened by hand.'
+      )
+    }
     log('topics', 'nothing survived, the list is unchanged')
-    return { changed: false, left: null }
+    return { changed: false, left }
   }
 
   const taking = pickBest(kept)
@@ -372,7 +389,7 @@ export async function topUpTopics(site, { min = DEFAULT_MIN_IDEAS, force = false
 
   if (dry) {
     log('topics', 'dry run, nothing written. It would add: ' + taking.map(k => k.phrase).join(', '))
-    return { changed: false, left: null, would: taking }
+    return { changed: false, left, would: taking }
   }
 
   writeSite(site, final)

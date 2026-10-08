@@ -25,3 +25,20 @@ Newest at the bottom. Nothing here was chosen by hand.
 Removed the same day, before anything was published from them: service delivery, agency services. A rule was added after this run that rejects a seed whose biggest neighbour is over
 250,000 searches a month, because a seed that broad builds a pool of terms this site
 cannot win and readers it cannot serve. Those two, and one on the other site, were what prompted it.
+
+## 2026-10-08
+
+| Topic | Group | The question it came from | Searches around it |
+|---|---|---|---|
+| brand voice | Questions | How do we make AI-assisted marketing sound like our real business instead of generic content? | 10 found, top 1000/mo |
+| online reputation | Problems | Our real reputation is stronger than what prospects see when they look us up online. | 10 found, top 4400/mo |
+| content quality | Objections | I do not want more content unless we can keep the quality and accuracy under control. | 10 found, top 1300/mo |
+| marketing automation | Decisions | Which recurring marketing tasks should we automate, and which ones still need human review? | 10 found, top 3600/mo |
+| marketing agency | Comparisons | Is this better than using a traditional marketing agency if we still want control over the message? | 10 found, top 60500/mo |
+| video transcription | Use cases | We have videos, meetings, demos, or training recordings that should become useful content instead of sitting in a folder. | 10 found, top 27100/mo |
+| website audit | Opportunities | What if our website could become the starting point for campaign research, messaging, presentations, and social content? | 10 found, top 4400/mo |
+| content repurposing | Questions | How can we turn one good idea, article, video, or presentation into more useful marketing without starting over every time? | 10 found, top 320/mo |
+| founder bottleneck | Problems | Too much of the marketing, client communication, and final review still depends on me personally. | 10 found, top 880/mo |
+| brand standards | Objections | Will the work be good enough for our brand, or will it make us look cheap? | 10 found, top 590/mo |
+
+Dropped from the list to stay inside 40 topics, oldest first: business proposal, pitch deck, case study, flyer design, content calendar, email newsletter, press release, meeting notes

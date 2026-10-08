@@ -34,7 +34,15 @@ export function loadSite(key) {
   return site
 }
 
-export async function api(site, pathname, opts = {}) {
+// The blog API answered three calls on 8 October 2026 and then returned
+// "Invalid or inactive API key" on the next one, minutes later, with the same key
+// that had just worked. It came back on its own. Whatever that is, a GET that
+// decides the whole run is not worth losing to it, so a 401 is retried twice
+// before it is believed. If the key really is dead, this fails anyway, fifteen
+// seconds later and with the same message.
+const RETRY_STATUS = new Set([401, 408, 429, 500, 502, 503, 504])
+
+export async function api(site, pathname, opts = {}, attempt = 1) {
   const res = await fetch(site.apiBase + pathname, {
     ...opts,
     headers: { 'X-API-Key': site.apiKey, 'Content-Type': 'application/json', ...(opts.headers || {}) },
@@ -42,7 +50,15 @@ export async function api(site, pathname, opts = {}) {
   const text = await res.text()
   let body
   try { body = JSON.parse(text) } catch { body = text }
-  if (!res.ok) throw new Error('API ' + res.status + ' ' + pathname + ' ' + String(text).slice(0, 300))
+  if (!res.ok) {
+    const method = (opts.method || 'GET').toUpperCase()
+    if (RETRY_STATUS.has(res.status) && method === 'GET' && attempt < 3) {
+      log('api', res.status + ' on ' + pathname + ', attempt ' + attempt + ' of 3, waiting')
+      await sleep(attempt * 5000)
+      return api(site, pathname, opts, attempt + 1)
+    }
+    throw new Error('API ' + res.status + ' ' + pathname + ' ' + String(text).slice(0, 300))
+  }
   return body
 }
 

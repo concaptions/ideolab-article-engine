@@ -35,14 +35,6 @@
     "aspect": "16:9"
   },
   "topics": [
-    "business proposal",
-    "pitch deck",
-    "case study",
-    "flyer design",
-    "content calendar",
-    "email newsletter",
-    "press release",
-    "meeting notes",
     "video script",
     "brochure design",
     "mind map",
@@ -72,7 +64,17 @@
     "recurring revenue",
     "agency operations",
     "marketing tools",
-    "content approval"
+    "content approval",
+    "brand voice",
+    "online reputation",
+    "content quality",
+    "marketing automation",
+    "marketing agency",
+    "video transcription",
+    "website audit",
+    "content repurposing",
+    "founder bottleneck",
+    "brand standards"
   ],
   "seo": {
     "minVolume": 0,
