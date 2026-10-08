@@ -306,6 +306,28 @@ function alreadyCovered(head, slugs) {
   })
 }
 
+// Ranking, written to David's notes of 29 September 2026 rather than to volume.
+//
+// Sorting on volume alone was tried on 8 October and it is wrong. With the
+// difficulty ceiling lifted so that long tail terms survive, the biggest head
+// word wins every time: IdeoLab's first pick became "survey" at 90,500 a month
+// and a difficulty of 96, and Strategic Marketer's became "project management".
+// Neither is about the business, and his notes say in as many words that we
+// should not create unrelated content simply because a keyword has traffic.
+//
+// So volume is carried as a logarithm, which keeps it mattering without letting
+// it dominate, and three things from his notes lift a keyword above a bigger
+// one: it is asked as a question, which he calls especially valuable; it is a
+// longer and therefore more specific phrase, which is what long tail means; and
+// it is winnable rather than merely large.
+function score(c) {
+  const w = words(c.keyword)
+  const question = QUESTIONS.has(w[0]) ? 1.6 : 1
+  const specific = Math.min(w.length, 5) / 2
+  const winnable = (100 - (c.difficulty ?? 50)) / 100
+  return Math.log10(Math.max(c.volume, 10)) * question * (0.5 + specific / 4) * winnable
+}
+
 export async function pickKeyword(site, { now = Date.now(), refresh = false } = {}) {
   const seo = site.seo || {}
   const maxDifficulty = seo.maxDifficulty ?? 35
@@ -330,9 +352,7 @@ export async function pickKeyword(site, { now = Date.now(), refresh = false } = 
 
   const kept = cluster(eligible, site.topics || [])
     .filter(c => !alreadyCovered(c.keyword, slugs))
-    // Volume carries the ranking, a rising term gets a lift, and difficulty
-    // breaks a tie. Nothing here is a guess, every number came from the API.
-    .sort((a, b) => (b.volume * (1 + b.trend / 100)) - (a.volume * (1 + a.trend / 100)) || a.difficulty - b.difficulty)
+    .sort((a, b) => score(b) - score(a))
 
   log('keyword', eligible.length + ' pass intent, difficulty under ' + maxDifficulty + ' and volume over ' + minVolume + ', leaving ' + kept.length + ' ideas not already written')
   if (!kept.length) {

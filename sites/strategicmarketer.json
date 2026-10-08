@@ -56,10 +56,12 @@
     "project management"
   ],
   "seo": {
-    "minVolume": 200,
-    "maxDifficulty": 35,
+    "minVolume": 0,
+    "maxDifficulty": 100,
     "intents": [
-      "informational"
+      "informational",
+      "commercial",
+      "transactional"
     ]
   },
   "locationCode": 2840,
