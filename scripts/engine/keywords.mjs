@@ -178,25 +178,70 @@ function toCandidate(item) {
 
 // One call per topic, cached for a week. A daily run costs nothing extra, and
 // the pool still refreshes often enough to catch a term that is rising.
+// Asking once, ordered by volume, never reaches the long tail. Measured on
+// 8 October 2026 against "project management": a page of 200 reaches down to a
+// volume of 20,000, and raising the page to 1,000 rows costs four times as much
+// and still stops at 2,400. Nothing below 200 arrives at any page size, because
+// the broad terms fill the page first. So lifting the volume floor in the
+// filters did nothing on its own: the small keywords were not being thrown
+// away, they were never being bought.
+//
+// A topic that fills the whole page is the one hiding a tail behind it. For
+// those, and only those, a second call asks for the band between 10 and 500 a
+// month, which is where the specific phrasings live. The same test returned
+// "project management stage gate methodology" at 480 a month. A topic that came
+// back with five candidates has no tail and is not asked twice.
+const TAIL_LOW = 10
+const TAIL_HIGH = 500
+
 async function buildPool(site) {
   const pool = []
   let spent = 0
+  let tailCalls = 0
+  const limit = site.seo?.poolLimit ?? 200
+  const base = {
+    location_code: site.locationCode ?? 2840,
+    language_code: site.languageCode ?? 'en',
+    limit,
+    include_serp_info: false,
+    order_by: ['keyword_info.search_volume,desc'],
+  }
+
   for (const topic of site.topics) {
     const { items, cost } = await labs('keyword_suggestions/live', [{
+      ...base,
       keyword: topic,
-      location_code: site.locationCode ?? 2840,
-      language_code: site.languageCode ?? 'en',
-      limit: 200,
-      include_serp_info: false,
-      order_by: ['keyword_info.search_volume,desc'],
       filters: [['keyword_info.search_volume', '>', site.seo?.minVolume ?? 200]],
     }])
     spent += cost || 0
     pool.push(...items.map(toCandidate))
-    log('keyword', 'topic "' + topic + '"  ' + items.length + ' candidates')
+    let note = items.length + ' candidates'
+
+    if (items.length === limit) {
+      const tail = await labs('keyword_suggestions/live', [{
+        ...base,
+        keyword: topic,
+        filters: [
+          ['keyword_info.search_volume', '<', TAIL_HIGH], 'and',
+          ['keyword_info.search_volume', '>', TAIL_LOW],
+        ],
+      }])
+      spent += tail.cost || 0
+      tailCalls++
+      pool.push(...tail.items.map(toCandidate))
+      note += ' plus ' + tail.items.length + ' from the long tail'
+    }
+    log('keyword', 'topic "' + topic + '"  ' + note)
   }
-  log('keyword', 'pool built, ' + pool.length + ' raw candidates, cost $' + spent.toFixed(3))
-  return pool
+
+  // Topics overlap, and the tail call can repeat a keyword the first call
+  // already returned when that first call did not reach far enough down.
+  const seen = new Set()
+  const unique = pool.filter(c => !seen.has(c.keyword) && seen.add(c.keyword))
+  log('keyword', 'pool built, ' + unique.length + ' candidates from ' + site.topics.length +
+    ' topics and ' + tailCalls + ' long tail calls, ' + (pool.length - unique.length) +
+    ' duplicates dropped, cost $' + spent.toFixed(3))
+  return unique
 }
 
 function poolFile(site) {
