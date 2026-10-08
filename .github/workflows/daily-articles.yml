@@ -10,10 +10,16 @@ name: Daily articles
 # manual dispatch in the same hours succeeded.
 #
 # The timing now comes from an IdeoLab workflow called "Daily Articles Trigger":
-# an Every Day trigger at 4 PM Asia/Karachi and one HTTP request to the dispatch
-# API below. Its first scheduled firing was 11:00:03 UTC on 6 October, three
-# seconds late, and both sites came out of it. If the articles ever stop, look
-# at that workflow's Runs tab first, not here.
+# an Every Day trigger and one HTTP request to the dispatch API below. Its first
+# scheduled firing was 11:00:03 UTC on 6 October, three seconds late, and both
+# sites came out of it. If the articles ever stop, look at that workflow's Runs
+# tab first, not here.
+#
+# That trigger was moved on 8 October 2026 to 11 am America/New_York, weekends
+# included, so the articles land in the American working day rather than its
+# night. The zone is set by name rather than by offset, so the hour is expected
+# to hold when American daylight saving ends on 1 November. That has not been
+# through a change of season yet, so it is worth a look on 2 November.
 # The repository's default token is read only, checked on 8 October 2026. The
 # run needs to write when it tops up the topic list from the ICP, so the
 # permission is granted here rather than widened across every workflow.
