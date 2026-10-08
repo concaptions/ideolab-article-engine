@@ -37,7 +37,7 @@ on:
 jobs:
   article:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 50
     strategy:
       fail-fast: false
       max-parallel: 2
@@ -74,7 +74,14 @@ jobs:
           restore-keys: |
             keyword-pool-${{ matrix.site }}-${{ hashFiles(format('sites/{0}.json', matrix.site)) }}-
 
-      - name: Write and publish one article
+      # Two articles a site a day, asked for on 8 October 2026. The engine writes
+      # exactly one article per invocation, so it is invoked twice rather than
+      # changed. The second pass picks a different keyword on its own, because by
+      # then the first article counts as already covered. They also come out a few
+      # minutes apart instead of together, which reads better on the listing page.
+      # A failure in the first pass does not cancel the second; the step still
+      # fails the job so the failure email goes out.
+      - name: Write and publish two articles
         if: steps.gate.outputs.run == 'yes'
         env:
           IDEOLAB_API_KEY: ${{ secrets.IDEOLAB_API_KEY }}
@@ -89,7 +96,14 @@ jobs:
           WRITER_MODEL: ${{ secrets.WRITER_MODEL }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: node scripts/engine/run.mjs --site ${{ matrix.site }} --status ${{ github.event.inputs.status || 'published' }}
+        run: |
+          fail=0
+          for n in 1 2; do
+            echo "::group::Article $n of 2"
+            node scripts/engine/run.mjs --site ${{ matrix.site }} --status ${{ github.event.inputs.status || 'published' }} || fail=1
+            echo "::endgroup::"
+          done
+          exit $fail
 
       - name: Keep the cover that was generated
         if: steps.gate.outputs.run == 'yes'
