@@ -50,7 +50,11 @@ jobs:
       matrix:
         site: [ideolab, strategicmarketer]
     steps:
+      # Full history, because the topic step at the end rebases before it pushes
+      # and a rebase on a one commit clone is not reliable.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -118,3 +122,46 @@ jobs:
           name: cover-${{ matrix.site }}
           path: content/*/images/*.png
           if-no-files-found: ignore
+
+      # The topic list is topped up after the articles, not before, because the
+      # two articles just written are what made it shorter. always() is the point
+      # of this step: a run that failed because nothing was left is exactly the
+      # run that has to refill the list.
+      #
+      # Nothing happens on most days. The script counts what is left first and
+      # exits without spending anything while that count is above its floor.
+      - name: Top up the topic list from the site's own documents
+        id: topics
+        if: always() && steps.gate.outputs.run == 'yes'
+        env:
+          IDEOLAB_API_KEY: ${{ secrets.IDEOLAB_API_KEY }}
+          STRATEGIC_API_KEY: ${{ secrets.STRATEGIC_API_KEY }}
+          DATAFORSEO_LOGIN: ${{ secrets.DATAFORSEO_LOGIN }}
+          DATAFORSEO_PASSWORD: ${{ secrets.DATAFORSEO_PASSWORD }}
+          WRITER_PROVIDER: ${{ secrets.WRITER_PROVIDER }}
+          WRITER_MODEL: ${{ secrets.WRITER_MODEL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          KIE_AI_API_KEY: ${{ secrets.KIE_AI_API_KEY }}
+        run: node scripts/engine/topics.mjs --site ${{ matrix.site }}
+
+      # Both sites run at once and both push to main. They touch different files,
+      # so a rebase settles it; the retry is for the moment where the other site
+      # pushed between this job's fetch and its push.
+      - name: Commit the new topics
+        if: always() && steps.gate.outputs.run == 'yes' && steps.topics.outputs.changed == 'yes'
+        run: |
+          git config user.name "Usama"
+          git config user.email "concaption@gmail.com"
+          git add sites/${{ matrix.site }}.json topics/${{ matrix.site }}.md
+          git commit -m "Top up the ${{ matrix.site }} topic list from its own documents"
+          for i in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              echo "pushed on attempt $i"
+              exit 0
+            fi
+            echo "attempt $i did not land, the other site probably pushed first"
+            sleep 5
+          done
+          echo "could not push the new topics after five attempts"
+          exit 1

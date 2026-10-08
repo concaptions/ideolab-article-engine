@@ -50,7 +50,7 @@ function auth() {
   return 'Basic ' + Buffer.from(env('DATAFORSEO_LOGIN') + ':' + env('DATAFORSEO_PASSWORD')).toString('base64')
 }
 
-async function labs(endpoint, body) {
+export async function labs(endpoint, body) {
   const res = await fetch(LABS + endpoint, {
     method: 'POST',
     headers: { Authorization: auth(), 'Content-Type': 'application/json' },
@@ -373,7 +373,10 @@ function score(c) {
   return Math.log10(Math.max(c.volume, 10)) * question * (0.5 + specific / 4) * winnable
 }
 
-export async function pickKeyword(site, { now = Date.now(), refresh = false } = {}) {
+// Everything pickKeyword does except choosing. The topic builder needs the count
+// of what is left, and counting it by publishing an article would be an expensive
+// way to ask a question.
+export async function remainingIdeas(site, { now = Date.now(), refresh = false } = {}) {
   const seo = site.seo || {}
   const maxDifficulty = seo.maxDifficulty ?? 35
   const minVolume = seo.minVolume ?? 200
@@ -400,6 +403,11 @@ export async function pickKeyword(site, { now = Date.now(), refresh = false } = 
     .sort((a, b) => score(b) - score(a))
 
   log('keyword', eligible.length + ' pass intent, difficulty under ' + maxDifficulty + ' and volume over ' + minVolume + ', leaving ' + kept.length + ' ideas not already written')
+  return kept
+}
+
+export async function pickKeyword(site, opts = {}) {
+  const kept = await remainingIdeas(site, opts)
   if (!kept.length) {
     throw new Error('Nothing left for ' + site.name + '. Add topics to sites/' + site.key + '.json or raise seo.maxDifficulty.')
   }

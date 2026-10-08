@@ -150,15 +150,22 @@ async function callKie(prompt) {
   return j.choices[0].message.content
 }
 
-export async function writeArticle(site, topic, extra = '') {
+// The provider choice is the same wherever a prompt is sent, so it lives here on
+// its own. The topic builder uses it too, and a second copy of this would be a
+// second place to forget a provider.
+export async function ask(prompt) {
   const provider = env('WRITER_PROVIDER', { required: false })
   if (!provider) {
     throw new Error('WRITER_PROVIDER is not set. Set it to anthropic, openai or kie with the matching key, or run with --from-file.')
   }
-  const prompt = extra ? buildWriterPrompt(site, topic) + '\n\n' + extra : buildWriterPrompt(site, topic)
-  log('write', provider + '  keyword "' + topic.keyword + '"')
   if (provider === 'anthropic') return callAnthropic(prompt)
   if (provider === 'openai') return callOpenAI(prompt)
   if (provider === 'kie') return callKie(prompt)
   throw new Error('Unknown WRITER_PROVIDER "' + provider + '"')
+}
+
+export async function writeArticle(site, topic, extra = '') {
+  const prompt = extra ? buildWriterPrompt(site, topic) + '\n\n' + extra : buildWriterPrompt(site, topic)
+  log('write', (env('WRITER_PROVIDER', { required: false }) || 'no provider') + '  keyword "' + topic.keyword + '"')
+  return ask(prompt)
 }
