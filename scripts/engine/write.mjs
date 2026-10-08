@@ -12,7 +12,12 @@ function knowledge(site) {
   const files = [
     'prompt/article-master-prompt.md',
     'prompt/cover-house-style.md',
-    site.key === 'strategicmarketer' ? 'prompt/strategicmarketer-brand-and-icp.md' : 'knowledge/voice-guide.md',
+    // Strategic Marketer gets two files, not one. The brand file is the voice and
+    // the audience, the source of truth is what may be claimed about the company
+    // and, just as usefully, the list of things the site never says.
+    ...(site.key === 'strategicmarketer'
+      ? ['prompt/strategicmarketer-brand-and-icp.md', 'knowledge/strategicmarketer/source-of-truth.md']
+      : ['knowledge/voice-guide.md']),
   ]
   return files
     .map(f => path.join(ROOT, f))

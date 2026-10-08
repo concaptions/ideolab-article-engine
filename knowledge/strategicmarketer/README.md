@@ -12,7 +12,21 @@ engine running on GitHub can read it. The originals live outside this repo in
 
 **The product is called Content Velocity.**
 
-## There is no Source of Truth for this site
+## The Source of Truth was written here, not supplied
+
+`source-of-truth.md` in this folder was written on 8 October 2026 by reading
+strategicmarketer.com, after Shahzaib asked for one to be built from the site rather
+than requested from David. It covers what the company offers, how the assessment
+runs, what the Business Intelligence Agent contains, what may be claimed, and a
+section listing everything the site does not say. The engine loads it for every
+Strategic Marketer article.
+
+It is only as current as the site was that day. If the site changes, the file is
+wrong until somebody re reads it.
+
+The rest of this section records why it had to be written, and it still stands.
+
+## David did not supply one
 
 The file named `Content_Velocity_SOT.txt` is not a source of truth. Its own
 opening line reads "External-facing ideal customer profile for marketing
@@ -32,5 +46,9 @@ is and what they struggle with, and may not make claims about what Content
 Velocity does, how it works or what it includes. There is no document to check
 such a claim against.
 
-If product led articles are wanted on this site, a Source of Truth has to be
-asked for. Until then the ICP is the ceiling.
+That ceiling has now been lifted for Strategic Marketer itself, by
+`source-of-truth.md`, which is read off the published site and so can be checked
+against it. It has not been lifted for Content Velocity. Nothing in this folder
+describes what Content Velocity does, how it works or what it includes, beyond the
+one line the agencies page carries. Until David sends something, no article may say
+more about that product than that line.

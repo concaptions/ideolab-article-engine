@@ -67,10 +67,12 @@ prioritise where AI creates the greatest near term value, map the right combinat
 of technology, implementation, automation, training or managed support, then activate
 the Business Intelligence Agent.
 
-How they distinguish themselves, in their own four words: Build It, meaning their own
-technology rather than repackaged third party tools. Fit It, shaped around how the
-business already runs. Install It, activated inside the company rather than left as
-advice. Train Your Team, so the people running it can do so confidently.
+How they distinguish themselves, in their own words, and there are five of them, not
+four: Build It, meaning their own technology rather than repackaged third party
+tools. Fit It, shaped around how the business already runs. Install It, activated
+inside the company rather than left as advice. Train Your Team, so the people
+running it can do so confidently. Stay On It, which the site words as sticking
+around until it is working every day.
 
 The contrast they draw: most consultants hand over a list of AI tools and leave.
 
@@ -136,8 +138,16 @@ booking as the action.
 Do not link to ideolab.ai from a Strategic Marketer article, do not mention IdeoLab,
 and do not reuse an IdeoLab call to action. The two brands are written separately.
 
-## What still needs confirming
+## Where the rest of the material is
 
-David has not supplied an ICP document for Strategic Marketer. Everything in the two
-audience sections above is read off the published site rather than given to us. If he
-sends one, it replaces those sections rather than sitting beside them.
+The two audience sections above were read off the published site, not handed to us.
+Two documents have since arrived and one more was written here, and they sit beside
+those sections rather than replacing them:
+
+- `knowledge/strategicmarketer/icp-partner-edition.txt` and `icp-public-short.txt`,
+  sent by David on 29 September 2026. Both are ICPs for Content Velocity, which
+  Strategic Marketer licenses to agencies, so they speak to Side A.
+- `knowledge/strategicmarketer/source-of-truth.md`, written on 8 October 2026 from
+  the published site because no source of truth existed. It holds what the company
+  offers, what may be claimed, and the list of things the site never states. Read it
+  before writing any sentence about what Strategic Marketer does or includes.
