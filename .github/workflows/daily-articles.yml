@@ -23,8 +23,10 @@ name: Daily articles
 # The repository's default token is read only, checked on 8 October 2026. The
 # run needs to write when it tops up the topic list from the ICP, so the
 # permission is granted here rather than widened across every workflow.
+# issues: write was added on 14 October 2026 for the failure report at the end.
 permissions:
   contents: write
+  issues: write
 
 on:
   workflow_dispatch:
@@ -91,6 +93,12 @@ jobs:
       # minutes apart instead of together, which reads better on the listing page.
       # A failure in the first pass does not cancel the second; the step still
       # fails the job so the failure email goes out.
+      #
+      # Everything is copied into run.log as well. The console output sits inside
+      # a collapsed group, so on a failed run the surface of the page says only
+      # "Process completed with exit code 1" and the real reason has to be opened
+      # by hand. The last step reads run.log and puts the reason where it can be
+      # seen without opening anything.
       - name: Write and publish two articles
         if: steps.gate.outputs.run == 'yes'
         env:
@@ -110,7 +118,7 @@ jobs:
           fail=0
           for n in 1 2; do
             echo "::group::Article $n of 2"
-            node scripts/engine/run.mjs --site ${{ matrix.site }} --status ${{ github.event.inputs.status || 'published' }} || fail=1
+            node scripts/engine/run.mjs --site ${{ matrix.site }} --status ${{ github.event.inputs.status || 'published' }} 2>&1 | tee -a run.log || fail=1
             echo "::endgroup::"
           done
           exit $fail
@@ -143,7 +151,7 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           KIE_AI_API_KEY: ${{ secrets.KIE_AI_API_KEY }}
-        run: node scripts/engine/topics.mjs --site ${{ matrix.site }}
+        run: node scripts/engine/topics.mjs --site ${{ matrix.site }} 2>&1 | tee -a run.log
 
       # Both sites run at once and both push to main. They touch different files,
       # so a rebase settles it; the retry is for the moment where the other site
@@ -165,3 +173,55 @@ jobs:
           done
           echo "could not push the new topics after five attempts"
           exit 1
+
+      # Nothing above here tells anyone that the run failed. The articles stopped
+      # on 12 October 2026 because the OpenAI account was out of credit, and that
+      # was noticed on 14 October by looking at the site. This step closes that
+      # gap three ways: the reason goes onto the run page itself, it goes into an
+      # issue, and the issue is assigned so an email is sent whether or not the
+      # repository is being watched. The issue also outlives the log, which GitHub
+      # deletes after ninety days.
+      #
+      # One issue per site, reused. A second failure comments on the open issue
+      # instead of opening another, otherwise a long outage leaves a column of
+      # identical issues. Close the issue once it is fixed and the next failure
+      # opens a fresh one.
+      - name: Report the failure
+        if: failure() && steps.gate.outputs.run == 'yes'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          touch run.log
+          grep -hoE '(Error|FAILED)[: ].*' run.log | cut -c1-300 | sort -u | head -3 > reason.txt
+          if [ ! -s reason.txt ]; then
+            echo "No error line was found in run.log, so the failure is in a step that does not write to it. Open the run and read the red step." > reason.txt
+          fi
+
+          {
+            echo "## ${{ matrix.site }} failed"
+            echo
+            echo "    $(head -1 reason.txt)"
+            echo
+            tail -n +2 reason.txt | sed 's/^/    /'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          {
+            echo "The ${{ matrix.site }} job failed on $(date -u '+%d %B %Y at %H:%M UTC')."
+            echo
+            echo "What the log says:"
+            echo
+            sed 's/^/    /' reason.txt
+            echo
+            echo "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            echo
+            echo "This issue is reused. Close it once the cause is fixed, and the next failure will open a fresh one."
+          } > issue-body.md
+
+          title="Daily articles failed: ${{ matrix.site }}"
+          open=$(gh issue list --state open --limit 100 --json number,title --jq '.[] | (.number|tostring) + "|" + .title' | awk -F'|' -v t="$title" '$2 == t { print $1; exit }')
+          if [ -n "$open" ]; then
+            gh issue comment "$open" --body-file issue-body.md
+            echo "commented on the open issue number $open"
+          else
+            gh issue create --title "$title" --body-file issue-body.md --assignee concaptions
+          fi
