@@ -45,6 +45,8 @@ on:
 jobs:
   article:
     runs-on: ubuntu-latest
+    env:
+      MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
     timeout-minutes: 50
     strategy:
       fail-fast: false
@@ -196,6 +198,7 @@ jobs:
       # identical issues. Close the issue once it is fixed and the next failure
       # opens a fresh one.
       - name: Report the failure
+        id: report
         if: failure() && steps.gate.outputs.run == 'yes'
         env:
           GH_TOKEN: ${{ github.token }}
@@ -226,6 +229,12 @@ jobs:
             echo "This issue is reused. Close it once the cause is fixed, and the next failure will open a fresh one."
           } > issue-body.md
 
+          {
+            echo "reason<<END_OF_REASON"
+            cat reason.txt
+            echo "END_OF_REASON"
+          } >> "$GITHUB_OUTPUT"
+
           title="Daily articles failed: ${{ matrix.site }}"
           open=$(gh issue list --state open --limit 100 --json number,title --jq '.[] | (.number|tostring) + "|" + .title' | awk -F'|' -v t="$title" '$2 == t { print $1; exit }')
           if [ -n "$open" ]; then
@@ -234,3 +243,34 @@ jobs:
           else
             gh issue create --title "$title" --body-file issue-body.md --assignee concaptions
           fi
+
+      # Shahzaib asked on 14 October 2026 that these failures also reach a
+      # personal inbox. GitHub only writes to the account's own primary address,
+      # which is the company one, and moving that address would move every other
+      # repository's mail with it. So the run sends this one itself and the
+      # company inbox keeps working exactly as before.
+      #
+      # It needs two repository secrets, MAIL_USERNAME and MAIL_PASSWORD, the
+      # second being a Gmail app password rather than the account password. Until
+      # they exist the step is skipped and nothing fails because of it; the issue
+      # opened above is still the record either way.
+      - name: Send the failure to a personal inbox
+        if: failure() && steps.gate.outputs.run == 'yes' && env.MAIL_USERNAME != ''
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          from: Daily articles
+          to: zuria.buildberg@gmail.com
+          subject: 'Daily articles failed: ${{ matrix.site }}'
+          body: |
+            The ${{ matrix.site }} job failed.
+
+            What the log says:
+
+            ${{ steps.report.outputs.reason }}
+
+            Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
