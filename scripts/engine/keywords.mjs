@@ -85,8 +85,19 @@ function words(s) {
 
 // Crude on purpose. It only has to make "infographic" and "infographics" the
 // same word, so a keyword that says one of them twice is caught.
+//
+// Taking one letter off anything ending in s was not crude, it was wrong.
+// "business" came back as "busines" and "businesses" as "businesse", two
+// different words, so on 14 October 2026 the engine read "ai tools for
+// business" and "ai tools for businesses" as two separate ideas and wrote both,
+// an hour apart, under titles that differed by one letter. A word already
+// ending in a double s keeps it, and an es plural loses both letters, which
+// lands them on the same stem.
 function stem(w) {
-  return w.length > 3 && w.endsWith('s') ? w.slice(0, -1) : w
+  if (w.length <= 3) return w
+  if (/(?:s|x|z|ch|sh)es$/.test(w)) return w.slice(0, -2)
+  if (w.endsWith('ss')) return w
+  return w.endsWith('s') ? w.slice(0, -1) : w
 }
 
 // "pitch deck", "pitch-deck" and "deck pitch" are one keyword with three
