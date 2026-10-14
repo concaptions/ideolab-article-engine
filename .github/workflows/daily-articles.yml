@@ -39,8 +39,8 @@ on:
       simulate_failure:
         description: Fail on purpose, to test the alerts. Writes nothing and spends nothing
         type: choice
-        options: [no, yes]
-        default: no
+        options: ['no', 'yes']
+        default: 'no'
       status:
         description: published or draft
         type: choice
