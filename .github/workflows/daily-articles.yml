@@ -45,8 +45,10 @@ on:
 jobs:
   article:
     runs-on: ubuntu-latest
+    # Read at job level so the last step can test it in its own if, which cannot
+    # see an env set on the step itself.
     env:
-      MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+      N8N_ALERT_URL: ${{ secrets.N8N_ALERT_URL }}
     timeout-minutes: 50
     strategy:
       fail-fast: false
@@ -245,32 +247,25 @@ jobs:
           fi
 
       # Shahzaib asked on 14 October 2026 that these failures also reach a
-      # personal inbox. GitHub only writes to the account's own primary address,
-      # which is the company one, and moving that address would move every other
-      # repository's mail with it. So the run sends this one itself and the
-      # company inbox keeps working exactly as before.
+      # personal inbox. GitHub only mails the account's own primary address,
+      # which is the company one, and changing that address would move every
+      # other repository's mail with it. Sending from here with a Gmail app
+      # password was the other option and it was turned down, rightly: that
+      # password opens the whole Google account, not just its outbox.
       #
-      # It needs two repository secrets, MAIL_USERNAME and MAIL_PASSWORD, the
-      # second being a Gmail app password rather than the account password. Until
-      # they exist the step is skipped and nothing fails because of it; the issue
-      # opened above is still the record either way.
+      # So the run posts the failure to an n8n workflow in the concaptions
+      # instance, "IdeoLab blog failure to email", and n8n sends the mail with
+      # the Gmail account it already holds. No credential of any kind lives in
+      # this repository; the secret is only the address to post to, and the step
+      # is skipped when it is not set.
       - name: Send the failure to a personal inbox
-        if: failure() && steps.gate.outputs.run == 'yes' && env.MAIL_USERNAME != ''
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          secure: true
-          username: ${{ secrets.MAIL_USERNAME }}
-          password: ${{ secrets.MAIL_PASSWORD }}
-          from: Daily articles
-          to: zuria.buildberg@gmail.com
-          subject: 'Daily articles failed: ${{ matrix.site }}'
-          body: |
-            The ${{ matrix.site }} job failed.
-
-            What the log says:
-
-            ${{ steps.report.outputs.reason }}
-
-            Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        if: failure() && steps.gate.outputs.run == 'yes' && env.N8N_ALERT_URL != ''
+        run: |
+          payload=$(jq -nc \
+            --arg site "${{ matrix.site }}" \
+            --rawfile reason reason.txt \
+            --arg run "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            '{site: $site, reason: $reason, run: $run}')
+          code=$(curl -sS -o /dev/null -w '%{http_code}' -X POST \
+            -H 'Content-Type: application/json' -d "$payload" "$N8N_ALERT_URL")
+          echo "n8n answered $code"
