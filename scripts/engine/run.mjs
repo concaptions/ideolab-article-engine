@@ -140,6 +140,19 @@ const coverObjects = parsed.meta.cover_objects || args.cover
 if (!excerpt) fail('write', 'no excerpt. Put it in the front matter or pass --excerpt')
 if (!coverObjects) fail('cover', 'no cover_objects. Put it in the front matter or pass --cover')
 
+// The platform does not refuse a slug it already holds. It appends a number and
+// publishes anyway, which is how ten versions of "what are the best ai tools"
+// reached IdeoLab between 8 and 14 October 2026, sitting at -2 and -3, eight of
+// them filling the listing page at once. The real fault was in the keyword
+// picker and it has been corrected, but a slug that already exists is a
+// duplicate whatever caused it, so stop before the cover is bought rather than
+// put a second copy in front of readers. Failing here is deliberate: the run
+// goes red and the failure step says why.
+const taken = (await existingPosts(site)).map(p => p.slug)
+if (taken.includes(slug)) {
+  fail('slug', 'a post with the slug "' + slug + '" already exists, so this article is a duplicate. Nothing was published and no cover was bought.')
+}
+
 log('cover', 'credit before ' + (await credit()))
 const file = await generateCover(site, coverObjects, slug)
 const coverUrl = args['dry-run'] ? null : await uploadCover(file, slug)

@@ -277,9 +277,22 @@ async function loadPool(site, { now, refresh = false }) {
 // Strip the angle words first, stem what is left. Doing it the other way round
 // looks up "companie" in a list that holds "companies", so the word survives as
 // if it were part of the subject and splits a cluster that should be one.
+// When every word of a keyword is a modifier there is no content left to group
+// on, as in "what is the best ai tools". The old fallback shaped the whole
+// keyword, function words included, and those are exactly the words a slug does
+// not keep. The engine writes that keyword up as "What Are the Best AI Tools",
+// so the subject carried an "is" that the slug could never match and
+// alreadyCovered() answered no every single time. Ten versions of that one
+// article went out between 8 and 14 October 2026, eight of them sitting
+// together on the listing page. Dropping the function words before shaping
+// leaves "ai best tool", which the slug does match, and it also puts "best ai
+// tools", "what are the best ai tools" and "what is the best ai tools" in one
+// cluster instead of three.
 function subject(keyword) {
   const content = words(keyword).filter(w => !MODIFIERS.has(w)).map(stem)
-  return content.length ? [...new Set(content)].sort().join(' ') : shape(keyword)
+  if (content.length) return [...new Set(content)].sort().join(' ')
+  const carrying = words(keyword).filter(w => !CONNECTIVES.has(w) && !QUESTIONS.has(w)).map(stem)
+  return carrying.length ? [...new Set(carrying)].sort().join(' ') : shape(keyword)
 }
 
 // Where the topic phrase starts. A title leads with its subject, so
@@ -419,4 +432,4 @@ export async function pickKeyword(site, opts = {}) {
   return pick
 }
 
-export const _internals = { relevant, onTopic, words, stem, shape }
+export const _internals = { relevant, onTopic, words, stem, shape, subject, cluster, alreadyCovered, score }
