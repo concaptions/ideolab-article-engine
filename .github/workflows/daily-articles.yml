@@ -36,6 +36,11 @@ on:
         type: choice
         options: [both, ideolab, strategicmarketer]
         default: both
+      simulate_failure:
+        description: Fail on purpose, to test the alerts. Writes nothing and spends nothing
+        type: choice
+        options: [no, yes]
+        default: no
       status:
         description: published or draft
         type: choice
@@ -119,6 +124,12 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
+          # A way to prove the failure path still works without breaking anything
+          # or spending a cent. It stops before the first model call.
+          if [ "${{ github.event.inputs.simulate_failure }}" = "yes" ]; then
+            echo "Error: simulated failure, asked for by whoever started this run. Nothing was written and nothing was spent." | tee -a run.log
+            exit 1
+          fi
           fail=0
           for n in 1 2; do
             echo "::group::Article $n of 2"
