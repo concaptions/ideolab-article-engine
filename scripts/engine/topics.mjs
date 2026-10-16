@@ -344,6 +344,14 @@ export async function topUpTopics(site, { min = DEFAULT_MIN_IDEAS, force = false
       log('topics', left + ' ideas left for ' + site.name + ', the floor is ' + min + ', nothing to do')
       return { changed: false, left }
     }
+    // IdeoLab's list was set by hand from David's keywords on 16 October 2026.
+    // A dry run of the top-up that day wanted to add "ai marketing tools",
+    // "brand safety" and "build vs buy", the broad kind of topic his list
+    // replaced, so a site can switch it off and be refilled by hand.
+    if (site.autoTopics === false) {
+      log('topics', 'only ' + left + ' ideas left for ' + site.name + ', but automatic topics are off for this site. Add more to sites/' + site.key + '.json by hand.')
+      return { changed: false, left }
+    }
     needed = true
     log('topics', 'only ' + left + ' ideas left for ' + site.name + ', below the floor of ' + min + ', topping up')
   }

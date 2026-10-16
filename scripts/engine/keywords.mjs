@@ -420,7 +420,11 @@ export async function remainingIdeas(site, { now = Date.now(), refresh = false }
     .filter(c => c.volume >= minVolume)
     .filter(c => intents.includes(c.intent))
     .filter(c => c.difficulty !== null && c.difficulty <= maxDifficulty)
-    .filter(c => c.trend > -30)
+    // A falling term is skipped unless the site says otherwise. IdeoLab lowers
+    // the bar because David named "ai presentation builder", "ai landing page
+    // builder" and "ai proposal generator" himself, and on 16 October 2026 all
+    // three were down between 37 and 56 percent on the year.
+    .filter(c => c.trend > (seo.minTrend ?? -30))
 
   const kept = cluster(eligible, site.topics || [])
     .filter(c => !alreadyCovered(c.keyword, slugs))

@@ -9518,3 +9518,21 @@ This source is intentionally written for outward-facing marketing use. Content a
 ## 18. Content Maintenance Rule
 
 IdeoLab evolves quickly. Review this source whenever a major capability launches, changes materially, or is retired. Competitive sections should also be refreshed before publishing direct comparison content. The marketing principle remains stable: preserve customer truth, update changing product facts, and keep all behind-the-scenes operating detail out of public content.
+
+## 19. Target Keywords
+
+These are the search terms IdeoLab wants to be found for, as listed by David Sprague on 16 October 2026. Topics and articles should be built around them before anything else.
+
+- AI workflow automation software
+- No code AI agent builder
+- Custom AI assistant for business
+- AI presentation builder
+- AI website builder for small business
+- All in one AI platform for business
+- AI automation software for small business
+- AI agent builder for small business
+- AI content creation software for small business
+- AI landing page builder
+- AI proposal generator
+- AI social media content generator for small business
+- AI graphic design software for small business

@@ -42,3 +42,32 @@ cannot win and readers it cannot serve. Those two, and one on the other site, we
 | brand standards | Objections | Will the work be good enough for our brand, or will it make us look cheap? | 10 found, top 590/mo |
 
 Dropped from the list to stay inside 40 topics, oldest first: business proposal, pitch deck, case study, flyer design, content calendar, email newsletter, press release, meeting notes
+
+## 2026-10-16: replaced with David's keyword list
+
+On 16 October David sent the keywords IdeoLab should rank for, after a title built
+on "best ai tools" carried none of them. The 40 topics above were all removed and
+these 14 put in their place. This list was chosen by hand from his, and the volumes
+are DataForSEO's for the United States on that day.
+
+Five of his phrases have searches of their own and are used as he wrote them. Seven
+have no recorded volume, and one has 70 a month, so each of those is entered as the
+shorter phrase it is built on, which does. "For small business" stays the audience
+every article is written for.
+
+| Topic | From David's keyword | Searches |
+|---|---|---|
+| no code ai agent builder | No code AI agent builder | 5400/mo, kd 10 |
+| ai agent builder | AI agent builder for small business (no volume) | 4400/mo, kd 35 |
+| ai workflow automation | AI workflow automation software (110/mo, kd 73) | 1000/mo, kd 28 |
+| ai automation software | AI automation software for small business (no volume) | 480/mo, kd 41 |
+| ai presentation builder | AI presentation builder | 260/mo, kd 56 |
+| ai website builder | AI website builder for small business (70/mo) | 40500/mo, kd 44 |
+| ai landing page builder | AI landing page builder | 390/mo, kd 36 |
+| ai proposal generator | AI proposal generator | 390/mo, kd 13 |
+| ai assistant for business | Custom AI assistant for business (no volume) | 880/mo, kd 12 |
+| custom ai assistant | Custom AI assistant for business (no volume) | 260/mo, kd 2 |
+| all in one ai platform | All in one AI platform for business (no volume) | 480/mo, kd 9 |
+| ai content creation | AI content creation software for small business (no volume) | 14800/mo, kd 34 |
+| ai social media content generator | AI social media content generator for small business (no volume) | 210/mo, kd 31 |
+| ai graphic design | AI graphic design software for small business (no volume) | 1900/mo, kd 12 |
