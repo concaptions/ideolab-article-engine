@@ -130,6 +130,10 @@ jobs:
             echo "Error: simulated failure, asked for by whoever started this run. Nothing was written and nothing was spent." | tee -a run.log
             exit 1
           fi
+          # Without pipefail the pipe below reports tee's exit code, not node's,
+          # so a failed article still read as success. That is how 15 October
+          # published nothing on either site and raised no alert.
+          set -o pipefail
           fail=0
           for n in 1 2; do
             echo "::group::Article $n of 2"
@@ -166,7 +170,9 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           KIE_AI_API_KEY: ${{ secrets.KIE_AI_API_KEY }}
-        run: node scripts/engine/topics.mjs --site ${{ matrix.site }} 2>&1 | tee -a run.log
+        run: |
+          set -o pipefail
+          node scripts/engine/topics.mjs --site ${{ matrix.site }} 2>&1 | tee -a run.log
 
       # Both sites run at once and both push to main. They touch different files,
       # so a rebase settles it; the retry is for the moment where the other site
