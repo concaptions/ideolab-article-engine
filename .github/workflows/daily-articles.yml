@@ -124,17 +124,20 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          # A way to prove the failure path still works without breaking anything
-          # or spending a cent. It stops before the first model call.
-          if [ "${{ github.event.inputs.simulate_failure }}" = "yes" ]; then
-            echo "Error: simulated failure, asked for by whoever started this run. Nothing was written and nothing was spent." | tee -a run.log
-            exit 1
-          fi
           # Without pipefail the pipe below reports tee's exit code, not node's,
           # so a failed article still read as success. That is how 15 October
           # published nothing on either site and raised no alert.
           set -o pipefail
           fail=0
+
+          # A way to prove the failure path still works without spending a cent.
+          # The failing node process goes through the same pipe as a real
+          # article, so this also proves the step sees node's exit code. It
+          # stops here either way; no article is written.
+          if [ "${{ github.event.inputs.simulate_failure }}" = "yes" ]; then
+            node -e "console.log('Error: simulated failure, asked for by whoever started this run. Nothing was written and nothing was spent.'); process.exit(1)" 2>&1 | tee -a run.log || fail=1
+            exit $fail
+          fi
           for n in 1 2; do
             echo "::group::Article $n of 2"
             node scripts/engine/run.mjs --site ${{ matrix.site }} --status ${{ github.event.inputs.status || 'published' }} 2>&1 | tee -a run.log || fail=1
