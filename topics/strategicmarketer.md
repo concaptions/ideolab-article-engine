@@ -25,3 +25,20 @@ Newest at the bottom. Nothing here was chosen by hand.
 Removed the same day, before anything was published from them: business systems. A rule was added after this run that rejects a seed whose biggest neighbour is over
 250,000 searches a month, because a seed that broad builds a pool of terms this site
 cannot win and readers it cannot serve. That one, and two on the other site, were what prompted it.
+
+## 2026-10-16
+
+| Topic | Group | The question it came from | Searches around it |
+|---|---|---|---|
+| ai roadmap | Questions | What should an AI roadmap for an established business include? | 10 found, top 720/mo |
+| marketing workflow | Problems | Marketing ideas keep getting stuck because there is no clear process to get them finished. | 10 found, top 260/mo |
+| ai accuracy | Objections | What if AI says something inaccurate about our company? | 10 found, top 9900/mo |
+| task automation | Decisions | Which repetitive work should we automate first? | 10 found, top 590/mo |
+| ai agents | Comparisons | Is an AI agent different from a business chatbot? | 10 found, top 49500/mo |
+| sales enablement | Use cases | How can our sales team use approved product, service, and positioning information? | 10 found, top 2900/mo |
+| digital footprint | Opportunities | Could our offline expertise become easier for prospects to find and verify? | 10 found, top 27100/mo |
+| ai roi | Questions | How do we know where AI would pay off first? | 10 found, top 590/mo |
+| brand control | Objections | How do we use AI without losing control of how the brand is represented? | 10 found, top 5400/mo |
+| content workflow | Decisions | Should we keep creating content randomly or build a repeatable process? | 10 found, top 210/mo |
+
+Dropped from the list to stay inside 40 topics, oldest first: ai consulting, ai implementation, ai training, marketing automation, lead generation, business process automation, ai strategy, customer service automation, crm automation
