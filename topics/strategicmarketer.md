@@ -42,3 +42,20 @@ cannot win and readers it cannot serve. That one, and two on the other site, wer
 | content workflow | Decisions | Should we keep creating content randomly or build a repeatable process? | 10 found, top 210/mo |
 
 Dropped from the list to stay inside 40 topics, oldest first: ai consulting, ai implementation, ai training, marketing automation, lead generation, business process automation, ai strategy, customer service automation, crm automation
+
+## 2026-10-18
+
+| Topic | Group | The question it came from | Searches around it |
+|---|---|---|---|
+| ai context | Questions | What does AI need to know about our business before we can trust the output? | 10 found, top 3600/mo |
+| online reputation | Problems | Why does our business look less credible online than it is in real life? | 10 found, top 4400/mo |
+| brand authenticity | Objections | Will AI make our business sound fake or unlike us? | 10 found, top 2900/mo |
+| ai solutions | Decisions | Should we buy AI tools, hire help, or install a business system? | 10 found, top 3600/mo |
+| ai platforms | Comparisons | What is better for an established business: AI tools or an installed AI system? | 10 found, top 165000/mo |
+| knowledge management | Use cases | Can we capture what the business knows so the team can use it more easily? | 10 found, top 4400/mo |
+| single source of truth | Opportunities | Could one approved set of business facts make every AI output more consistent? | 10 found, top 2900/mo |
+| ai use cases | Questions | Where should we use AI first in the business? | 10 found, top 1600/mo |
+| marketing operations | Problems | Why does marketing keep stopping whenever the owner gets busy? | 10 found, top 1300/mo |
+| ai marketing agency | Objections | How is this different from hiring another marketing agency that does not understand us? | 10 found, top 1900/mo |
+
+Dropped from the list to stay inside 40 topics, oldest first: ai tools for small business, chatbot for business, standard operating procedures, prompt engineering, ai content creation, workflow automation, sales automation, email marketing, customer onboarding, business process improvement
