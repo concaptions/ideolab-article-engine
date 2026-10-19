@@ -71,3 +71,69 @@ every article is written for.
 | ai content creation | AI content creation software for small business (no volume) | 14800/mo, kd 34 |
 | ai social media content generator | AI social media content generator for small business (no volume) | 210/mo, kd 31 |
 | ai graphic design | AI graphic design software for small business (no volume) | 1900/mo, kd 12 |
+
+## 2026-10-19: 50 more, so the list never runs dry
+
+David's 14 lasted six days, and on 19 October he asked for 50 to be ready ahead of
+time. Each topic below maps to a feature or audience in the marketing source of
+truth. All 50 were run through the engine's own pool, filters and duplicate check
+together, against the 43 posts on the site that day, and each gives exactly one
+article; the second column is the keyword that article will lead with. Topics that
+gave nothing, or an article too close to one already live (product photos, content
+repurposing, the two AI assistant posts, competitor research beside competitor
+website analysis), were left out.
+"ai agent vs ai assistant" is entered as "ai agent vs assistant" because the engine
+drops a keyword that repeats a word. Searches are DataForSEO's, United States.
+
+| Topic | Article keyword | Searches | Source of truth |
+|---|---|---|---|
+| ai flyer generator | ai flyer generator | 5400/mo, kd 25 | AI Flyers |
+| ai poster generator | ai poster generator | 3600/mo, kd 34 | AI Graphics |
+| ai social media manager | ai social media manager tools | 10/mo, kd 38 | Social Studio |
+| ai text to website builder | ai text to website builder | 320/mo, kd 46 | AI Sites & Lead Pages |
+| ai blog website builder | ai blog website builder | 210/mo, kd 53 | Brand Sites |
+| ai agent vs assistant | ai agent vs assistant | 90/mo, kd 5 | Platform & Labs |
+| ai tools for content creators | ai tools for content creators | 1900/mo, kd 15 | Primary audiences: creators |
+| social media scheduler | social media scheduler | 135000/mo, kd 33 | Social Studio |
+| ai video analysis | ai video analysis | 1300/mo, kd 0 | Upload Video & Analyze Recordings |
+| ai tools for real estate agents | ai tools for real estate agents | 390/mo, kd 8 | Primary audiences: local businesses |
+| instagram caption generator | instagram caption generator | 2900/mo, kd 14 | AI Social Content |
+| one page website builder | one-page website builder | 590/mo, kd 15 | AI Sites & Lead Pages |
+| youtube video summarizer | youtube video summarizer | 6600/mo, kd 30 | YouTube Video & Channel Research |
+| pdf summarizer | pdf summarizer | 3600/mo, kd 14 | Document & Spreadsheet Sources |
+| audio to text | audio-to-text | 12100/mo, kd 36 | Audio Recording & Transcription |
+| ai prompt templates | ai prompt templates | 320/mo, kd 0 | Prompt Templates Library |
+| combine images ai | combine images ai | 320/mo, kd 0 | Blend Images |
+| ai sop generator | ai sop generator | 320/mo, kd 0 | Upload Video & Analyze Recordings |
+| concept map maker | concept map maker | 2900/mo, kd 30 | AI Mindmaps |
+| process documentation | process documentation | 1600/mo, kd 12 | Upload Video & Analyze Recordings |
+| personal brand website | personal brand website examples | 110/mo, kd 0 | Brand Sites |
+| ai tools for consultants | ai tools for consultants | 110/mo, kd 0 | Primary audiences: consultants |
+| ai lead generation | ai lead generation | 1600/mo, kd 30 | Find Local Businesses & Lead Research |
+| ai photo editor | ai photo editor | 201000/mo, kd 58 | Edit Image |
+| event flyer | event flyer | 3600/mo, kd 27 | AI Flyers |
+| ai document analysis | ai document analysis | 590/mo, kd 21 | Document & Spreadsheet Sources |
+| booking website | booking website templates | 210/mo, kd 6 | Booking Sites |
+| ai knowledge base | ai knowledge base | 880/mo, kd 28 | Persistent Connected Context |
+| youtube thumbnail maker | youtube thumbnail maker | 4400/mo, kd 44 | AI Video Thumbnails |
+| sales presentation | sales presentation | 720/mo, kd 18 | AI Presentations |
+| ai image analyzer | ai image analyzer | 1000/mo, kd 34 | Image Sources & Visual Understanding |
+| ai tools for ecommerce | ai tools for ecommerce | 170/mo, kd 23 | Primary audiences: ecommerce |
+| squeeze page | squeeze page | 210/mo, kd 3 | Free Offer Lead Sites |
+| brainstorming tools | brainstorming tools | 590/mo, kd 19 | AI Mindmaps |
+| lead magnet | lead magnet | 1600/mo, kd 30 | Free Offer Lead Sites |
+| event website builder | event website builder | 170/mo, kd 14 | Event Registration Sites |
+| creative brief generator | creative brief generator | 70/mo, kd 3 | Creative Brief Review Step |
+| text to image | text-to-image | 9900/mo, kd 56 | Text to Image |
+| ai linkedin post generator | ai linkedin post generator | 50/mo, kd 11 | Topic-to-Social Posts |
+| ai content calendar | ai content calendar | 40/mo, kd 0 | Social Studio |
+| social media analytics | social media analytics | 1600/mo, kd 52 | Social Analytics & AI Learning Loop |
+| ai photo shoot | ai photo shoot | 320/mo, kd 40 | AI Photo Shoot |
+| ai research assistant | ai research assistant | 1900/mo, kd 58 | Live Web Search in Chat |
+| competitor website analysis | competitor website analysis | 1600/mo, kd 50 | Website Deep Research |
+| find local businesses | find local businesses | 140/mo, kd 5 | Find Local Businesses & Lead Research |
+| webinar landing page | webinar landing page examples | 90/mo, kd 1 | Event Registration Sites |
+| event promotion ideas | event promotion ideas | 170/mo, kd 0 | Event Registration Sites |
+| content creation workflow | content creation workflow | 140/mo, kd 6 | Platform & Labs |
+| marketing workflow | marketing workflow tool | 210/mo, kd 3 | Automations |
+| product launch | product launch | 1600/mo, kd 27 | Cross-Feature Workflow Library |
