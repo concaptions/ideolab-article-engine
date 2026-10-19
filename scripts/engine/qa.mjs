@@ -83,11 +83,14 @@ export async function qa(md, { site, keyword }) {
     // three times before calling it broken.
     let status = null
     let lastErr = ''
+    let gone = false
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
         const r = await fetch(u, { headers: { 'User-Agent': 'Mozilla/5.0' } })
         status = r.status
-        if (r.ok) break
+        // An unpublished post answers 200 with a "This post is no longer
+        // available" page, so the status alone passed it. Read the body.
+        if (r.ok) { gone = /This post is no longer available/i.test(await r.text()); break }
       } catch (e) {
         lastErr = e.message.slice(0, 60)
       }
@@ -95,6 +98,7 @@ export async function qa(md, { site, keyword }) {
     }
     if (status === null) errors.push('unreachable link ' + u + ' ' + lastErr)
     else if (status >= 400) errors.push('dead link ' + status + ' ' + u)
+    else if (gone) errors.push('dead link, the post is no longer available ' + u)
   }
 
   return { title, words, h2, faqs, links: seen.size, errors, warn }

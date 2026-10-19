@@ -74,7 +74,11 @@ if (args['from-file']) {
 } else {
   const picked = await pickKeyword(site)
   keyword = picked.keyword
-  topic = { ...picked, existing: await existingPosts(site) }
+  // Only live posts are offered as link targets. On 19 October 2026 David
+  // clicked a link in a new article that went to a post set to draft on
+  // 9 October and got "This post is no longer available"; the list had
+  // included drafts, and 14 such links were live across both sites.
+  topic = { ...picked, existing: (await existingPosts(site)).filter(p => p.status === 'published') }
   md = await writeArticle(site, topic)
 }
 
