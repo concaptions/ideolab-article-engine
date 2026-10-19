@@ -8,7 +8,9 @@ export async function qa(md, { site, keyword }) {
   const words = body.split(/\s+/).filter(Boolean).length
   const h2 = (md.match(/^## /gm) || []).length
   const faqSection = md.split(/^## /m).slice(-1)[0] || ''
-  const faqs = (faqSection.match(/^\*\*.+\?\*\*$/gm) || []).length
+  // Version 13 of the master prompt asks for the questions as H3 headings,
+  // the engine's own rule asks for bold lines. Either is a question.
+  const faqs = (faqSection.match(/^(\*\*.+\?\*\*|### .+\?)\s*$/gm) || []).length
 
   if (!title) errors.push('no H1 title')
   // The keyword has to open the title, but it has to open it in English.
