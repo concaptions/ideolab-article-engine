@@ -13,26 +13,37 @@ export async function qa(md, { site, keyword }) {
   const faqs = (faqSection.match(/^(\*\*.+\?\*\*|### .+\?)\s*$/gm) || []).length
 
   if (!title) errors.push('no H1 title')
-  // The keyword has to open the title, but it has to open it in English.
-  // DataForSEO hands back stripped forms like "what are sales funnel", and
-  // demanding that string verbatim produced an ungrammatical headline. So the
-  // test is on the words, in order, allowing a plural, an article and the verb
-  // between them. "What Is a Sales Funnel" passes for "what are sales funnel";
-  // a title that reorders the words or buries them still fails.
+  // The keyword has to be in the title, in English. DataForSEO hands back
+  // stripped forms like "what are sales funnel", and demanding that string
+  // verbatim produced an ungrammatical headline. So the test is on the words,
+  // allowing a plural, an article and the verb between them, and in any order:
+  // the topic is "invoice simple" but the headline is "Simple Invoice".
+  //
+  // It used to have to open the title as well, followed by a colon and a verb.
+  // On 20 October 2026 David called the result "a POOR TITLE ... nobody cares",
+  // and his own master prompt only asks for the keyword to appear naturally next
+  // to a reason to care. Forcing it to the front is what made every title read
+  // "Keyword: Verb Something", so the position is no longer checked.
   const filler = new Set(['a', 'an', 'the', 'is', 'are', 'was', 'were', 'do', 'does'])
   const norm = s => s.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean)
     .map(w => (w.length > 3 && w.endsWith('s') ? w.slice(0, -1) : w))
-  const wanted = norm(keyword || '').filter(w => !filler.has(w))
-  const opening = norm(title.split(':')[0]).filter(w => !filler.has(w))
-  // Order is not enforced either, for the same reason: the topic is "invoice"
-  // and DataForSEO spells the search "invoice simple", but the headline is
-  // "Simple Invoice". What matters is that the keyword fills the opening of
-  // the title, not that it is copied letter for letter.
-  const head = new Set(opening.slice(0, wanted.length))
-  const opensWithKeyword = wanted.length && wanted.every(w => head.has(w))
-  if (keyword && !opensWithKeyword) {
-    errors.push('title does not open with the keyword "' + keyword + '", it opens with "' + title.split(':')[0].trim() + '"')
+  // The words have to sit together, though. "Why Your Marketing Keeps
+  // Stalling, and the Plan That Fixes It" holds both words of "marketing plan"
+  // and is not a title about a marketing plan. Two extra words of slack covers
+  // an article and a verb. The question words of "how to get more customers"
+  // are not required, "Get More Customers" is the search.
+  const optional = new Set([...filler, 'how', 'what', 'why', 'when', 'where', 'which', 'who', 'to'])
+  const wanted = [...new Set(norm(keyword || '').filter(w => !optional.has(w)))]
+  const titleWords = norm(title)
+  let hasKeyword = false
+  for (let i = 0; i < titleWords.length && wanted.length && !hasKeyword; i++) {
+    const near = new Set(titleWords.slice(i, i + wanted.length + 2))
+    hasKeyword = wanted.every(w => near.has(w))
   }
+  if (keyword && !hasKeyword) {
+    errors.push('title does not carry the keyword "' + keyword + '" with its words together, the title is "' + title + '"')
+  }
+  if (title.length > 75) warn.push('title is ' + title.length + ' characters, aim for under 70')
   if (words < 1200 || words > 1800) errors.push('word count ' + words + ', must be 1200 to 1800')
   if (h2 < 7 || h2 > 11) warn.push('H2 count ' + h2 + ', expected 7 to 11 including the FAQ heading')
   if (faqs < 5 || faqs > 7) errors.push('FAQ count ' + faqs + ', must be 5 to 7')
