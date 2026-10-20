@@ -137,3 +137,64 @@ drops a keyword that repeats a word. Searches are DataForSEO's, United States.
 | content creation workflow | content creation workflow | 140/mo, kd 6 | Platform & Labs |
 | marketing workflow | marketing workflow tool | 210/mo, kd 3 | Automations |
 | product launch | product launch | 1600/mo, kd 27 | Cross-Feature Workflow Library |
+
+## 2026-10-20: the 50 cut to 34, and the list made less alike
+
+Read as a list, the 50 of 19 October were too alike. 22 of them began with "ai",
+on top of David's 14 that mostly do, so nearly every title on the blog would have
+opened the same way. And they bunched: nine were a kind of website or landing
+page, six were "read this file for me" (pdf summarizer, ai document analysis,
+youtube video summarizer, video analysis, image analyzer, audio to text), six were
+social media, and four were "ai tools for" an audience, the shape that produced
+the "best ai tools" duplicates. The engine passed them all because its duplicate
+check compares words, and "pdf summarizer" and "ai document analysis" share none
+while being the same article to a reader.
+
+So each group now keeps at most two or three, David's six stay because he has seen
+them, and the gaps are filled with what an owner actually searches for, problems
+and plans rather than tool names. Each was also read against the live posts by
+meaning, not by words: "sales presentation" went because the pitch deck post
+exists, "marketing workflow" because the workflow automation post exists,
+"competitor website analysis" because "competitor analysis" covers it. 10 of the
+34 begin with "ai", six of them David's. Run through the engine together, they
+give 33 articles; "ai text to website builder" gives none because the draft of
+that article already holds its words.
+
+Removed: ai tools for content creators, ai video analysis, ai tools for real estate agents, instagram caption generator, one page website builder, youtube video summarizer, pdf summarizer, combine images ai, ai sop generator, concept map maker, personal brand website, ai tools for consultants, event flyer, ai document analysis, sales presentation, ai image analyzer, ai tools for ecommerce, squeeze page, event website builder, text to image, ai linkedin post generator, ai content calendar, social media analytics, ai photo shoot, ai research assistant, competitor website analysis, find local businesses, webinar landing page, event promotion ideas, content creation workflow, marketing workflow.
+
+| Topic | Article keyword | Searches |
+|---|---|---|
+| ai flyer generator | ai flyer generator | 5400/mo, kd 25 |
+| ai poster generator | ai poster generator | 3600/mo, kd 34 |
+| ai social media manager | ai social media manager tools | 10/mo, kd 38 |
+| ai text to website builder | already in a draft of 20 October |  |
+| ai blog website builder | ai blog website builder | 210/mo, kd 53 |
+| ai agent vs assistant | ai agent vs assistant | 90/mo, kd 5 |
+| social media scheduler | social media scheduler | 135000/mo, kd 33 |
+| audio to text | audio-to-text | 12100/mo, kd 36 |
+| ai prompt templates | ai prompt templates | 320/mo, kd 0 |
+| process documentation | process documentation | 1600/mo, kd 12 |
+| ai lead generation | ai lead generation | 1600/mo, kd 30 |
+| ai photo editor | ai photo editor | 201000/mo, kd 58 |
+| booking website | booking website templates | 210/mo, kd 6 |
+| ai knowledge base | ai knowledge base | 880/mo, kd 28 |
+| youtube thumbnail maker | youtube thumbnail maker | 4400/mo, kd 44 |
+| lead magnet | lead magnet | 1600/mo, kd 30 |
+| brainstorming tools | brainstorming tools | 590/mo, kd 19 |
+| creative brief generator | creative brief generator | 70/mo, kd 3 |
+| product launch | product launch | 1600/mo, kd 27 |
+| how to get more customers | how to get more customers | 260/mo, kd 0 |
+| youtube video ideas | youtube video ideas | 3600/mo, kd 0 |
+| grand opening ideas | grand opening ideas | 320/mo, kd 0 |
+| marketing plan | marketing plan | 8100/mo, kd 29 |
+| brand photography | brand photography | 590/mo, kd 0 |
+| value proposition | value proposition | 14800/mo, kd 36 |
+| real estate marketing ideas | real estate marketing ideas | 390/mo, kd 26 |
+| competitor analysis | competitor analysis | 6600/mo, kd 36 |
+| event marketing | event marketing | 1900/mo, kd 26 |
+| brand messaging | brand messaging | 1000/mo, kd 22 |
+| ecommerce marketing | ecommerce-marketing | 880/mo, kd 22 |
+| marketing calendar | marketing calendar | 1300/mo, kd 28 |
+| visual storytelling | visual storytelling | 1600/mo, kd 36 |
+| website copy | website copy | 1300/mo, kd 38 |
+| instagram marketing | instagram-marketing | 5400/mo, kd 55 |
