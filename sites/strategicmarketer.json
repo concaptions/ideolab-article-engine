@@ -21,7 +21,12 @@
   },
   "cover": {
     "styleBlock": "Wide 16:9 landscape studio photograph on a seamless dark navy background shading from #0a0f1e at the top to #141c33 at the base. {OBJECTS}, rendered in matte brushed gold #e9b95c. Soft directional light from the upper left, restrained specular highlights, deep soft shadows, generous empty navy space. Realistic photography. Palette limited to dark navy and brushed gold. No text, no letters, no numbers, no logos, no people, no hands, no wood, no daylight.",
-    "aspect": "16:9"
+    "aspect": "16:9",
+    "thumbnail": {
+      "text": true,
+      "style": "Minimalist Premium",
+      "guide": "prompt/cover-thumbnail.md, section Site: strategicmarketer"
+    }
   },
   "topics": [
     "sales funnel",

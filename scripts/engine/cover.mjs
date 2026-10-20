@@ -21,9 +21,13 @@ export function buildPrompt(site, objects) {
 }
 
 export async function generateCover(site, objects, outName) {
+  return generateImage(site, buildPrompt(site, objects), outName)
+}
+
+// Any finished prompt, for the covers thumbnail.mjs writes.
+export async function generateImage(site, prompt, outName) {
   const key = env('KIE_AI_API_KEY')
   const H = { Authorization: 'Bearer ' + key, 'Content-Type': 'application/json' }
-  const prompt = buildPrompt(site, objects)
 
   const c = await fetch(CREATE, {
     method: 'POST', headers: H,

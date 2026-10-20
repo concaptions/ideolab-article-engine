@@ -12,7 +12,8 @@ import { loadSite, slugify, log, fail, ROOT } from './lib.mjs'
 import { pickKeyword, existingPosts } from './keywords.mjs'
 import { writeArticle } from './write.mjs'
 import { qa } from './qa.mjs'
-import { generateCover, credit } from './cover.mjs'
+import { generateCover, generateImage, credit } from './cover.mjs'
+import { makeCover } from './thumbnail.mjs'
 import { uploadCover } from './upload.mjs'
 import { publishPost } from './publish.mjs'
 import { verifyLive } from './verify.mjs'
@@ -142,7 +143,7 @@ const excerpt = parsed.meta.excerpt || args.excerpt
 const category = parsed.meta.category || args.category || site.defaultCategory
 const coverObjects = parsed.meta.cover_objects || args.cover
 if (!excerpt) fail('write', 'no excerpt. Put it in the front matter or pass --excerpt')
-if (!coverObjects) fail('cover', 'no cover_objects. Put it in the front matter or pass --cover')
+if (!coverObjects && !site.cover.thumbnail) fail('cover', 'no cover_objects. Put it in the front matter or pass --cover')
 
 // The platform does not refuse a slug it already holds. It appends a number and
 // publishes anyway, which is how ten versions of "what are the best ai tools"
@@ -158,7 +159,22 @@ if (taken.includes(slug)) {
 }
 
 log('cover', 'credit before ' + (await credit()))
-const file = await generateCover(site, coverObjects, slug)
+// A site with cover.thumbnail gets the cover David approved on 20 October 2026,
+// a headline and a scene of its own, read back before it is used. The old
+// one object studio cover stays for any site without it.
+let file, coverAlt
+if (site.cover.thumbnail) {
+  try {
+    const made = await makeCover(site, { title, body: parsed.body }, slug, (prompt, name) => generateImage(site, prompt, name))
+    file = made.file
+    coverAlt = made.alt
+  } catch (e) {
+    fail('cover', String(e.message || e))
+  }
+} else {
+  file = await generateCover(site, coverObjects, slug)
+  coverAlt = coverObjects.split('.')[0]
+}
 const coverUrl = args['dry-run'] ? null : await uploadCover(file, slug)
 
 if (args['dry-run']) {
@@ -169,7 +185,7 @@ if (args['dry-run']) {
 const content = parsed.body.replace(/^# .+\n+/m, '')
 const posted = await publishPost(site, {
   title, slug, excerpt, content, category, coverUrl,
-  coverAlt: coverObjects.split('.')[0],
+  coverAlt,
   status: args.status || 'published',
 })
 

@@ -32,7 +32,12 @@
   },
   "cover": {
     "styleBlock": "Wide 16:9 landscape studio photograph on a pale ice blue (#DCE9F2) seamless surface. {OBJECTS}. Soft even studio light from the upper left, gentle contact shadows, generous empty background. Realistic photography, matte surfaces, no glare. Palette limited to pale ice blue, white, navy #0B2559 and one medium blue accent #2F7CF0. No orange, no wood, no green. No text, no letters, no numbers, no logos, no people, no hands.",
-    "aspect": "16:9"
+    "aspect": "16:9",
+    "thumbnail": {
+      "text": true,
+      "style": "Pastel SaaS 2.5D",
+      "guide": "prompt/cover-thumbnail.md, section Site: ideolab"
+    }
   },
   "topics": [
     "no code ai agent builder",
