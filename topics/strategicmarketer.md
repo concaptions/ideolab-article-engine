@@ -59,3 +59,20 @@ Dropped from the list to stay inside 40 topics, oldest first: ai consulting, ai 
 | ai marketing agency | Objections | How is this different from hiring another marketing agency that does not understand us? | 10 found, top 1900/mo |
 
 Dropped from the list to stay inside 40 topics, oldest first: ai tools for small business, chatbot for business, standard operating procedures, prompt engineering, ai content creation, workflow automation, sales automation, email marketing, customer onboarding, business process improvement
+
+## 2026-10-21
+
+| Topic | Group | The question it came from | Searches around it |
+|---|---|---|---|
+| ai for business | Questions | How can AI help our business without turning into another experiment? | 10 found, top 8100/mo |
+| content calendar | Problems | Our content falls behind every time the owner gets busy. | 10 found, top 4400/mo |
+| marketing software | Objections | I do not want another marketing tool that my team has to figure out alone. | 10 found, top 135000/mo |
+| ai consultant | Decisions | Should we hire someone to help implement AI or keep trying to do it internally? | 10 found, top 8100/mo |
+| ai software | Comparisons | What is the difference between buying AI software and having an AI system installed around our business? | 10 found, top 9900/mo |
+| standard operating procedures | Use cases | Use AI to capture how the business works so the team is not always asking the owner. | 10 found, top 74000/mo |
+| local business marketing | Opportunities | Our local reputation could become more visible to the people already searching in our market. | 10 found, top 480/mo |
+| ai training data | Questions | What does AI need to know about our company before it can do useful work? | 10 found, top 1600/mo |
+| social proof | Problems | People trust us when they meet us, but they cannot see enough proof before the call. | 10 found, top 4400/mo |
+| marketing consultant | Objections | I have worked with consultants before and ended up with advice instead of implementation. | 10 found, top 49500/mo |
+
+Dropped from the list to stay inside 40 topics, oldest first: sales funnel, lead nurturing, marketing analytics, content strategy, brand voice, competitor analysis, market segmentation, knowledge base, internal documentation, employee onboarding
