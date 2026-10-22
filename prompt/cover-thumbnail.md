@@ -112,6 +112,10 @@ every customer who asks."
   envelope, a target, a camera); letters and numbers are not.
 - Envelopes, folders, trays and plain cards are not the default: the failed
   rounds were made of them. Use one only when the article is about exactly that.
+- Vary the mechanism. The seven covers that went live on 22 October are all a
+  press or roller turning tiles into a tile, so that one is taken for now. Others:
+  a balance scale, a funnel, a magnet, a pulley, a sieve, a row of dominoes, a
+  lens focusing light, a small bridge, meshed gears, a sorting chute.
 
 How it looks:
 
