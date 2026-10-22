@@ -93,8 +93,8 @@ export function briefPrompt(site, { title, body, setting }, used = []) {
     'prompt: one self contained image prompt that starts with "A 16:9 blog thumbnail", in this site\'s style',
     'and as detailed as the example in the guide below, with a new scene for this article.',
     'Pick one concrete visual idea from this article that a reader gets at a glance, of the kind this site\'s',
-    'section of the guide asks for. Decide the composition yourself and say where the',
-    'headline sits (left, right or top, whatever suits the scene) with generous margins from every edge.',
+    'section of the guide asks for. Decide the composition yourself and say where in the scene the',
+    'headline sits (left, right or top, whatever suits it) with generous margins from every edge.',
     'Do not default to a laptop or a browser window, and never a robot, a lightbulb or a dashboard full of',
     'numbers. No invented statistics, results, logos or brand names.',
     'End the prompt with exactly this, with your hook in the quotes: The only readable text in the entire',
@@ -103,7 +103,9 @@ export function briefPrompt(site, { title, body, setting }, used = []) {
     '',
     guide(site),
     '',
-    used.length ? 'Headlines already on this site\'s covers, do not reuse or echo any of them: ' + used.join(' | ') : '',
+    used.length ? 'Covers already on this site, newest first: the headline, then what the picture shows where it is ' +
+      'known. Do not reuse or echo any headline, and do not repeat a scene, a setting or the same kind of person in ' +
+      'the same pose: ' + used.join(' | ') : '',
     setting ? 'The business in this story: ' + setting + '. Use it unless the article\'s own main example is clearly ' +
       'another kind of business. If the story is about a customer looking the business up, they are somewhere ' +
       'ordinary, at home, in a car park, at a cafe, and the business they look at is this one.' : '',
@@ -136,7 +138,10 @@ export function reviewPrompt(site, brief, used = []) {
     'below. Count the distinct objects the prompt asks for. Look for anything drawn literally from a figure of',
     'speech, anything that could read as negative or odd, a background split into panels, and a hook that',
     'echoes one already used. Where the site section asks for a story, check that a stranger seeing only the',
-    'picture could say in one sentence who is doing what, and that it is the moment "says" describes.',
+    'picture could say in one sentence who is doing what, and that it is the moment "says" describes; that the',
+    'main action is not someone looking at or tapping a device; that every object is a real one; that the',
+    'prompt does not split the image into a left part and a right part; and that the scene and the kind of',
+    'person are not ones already used on this site.',
     'If it passes every rule, return it unchanged. If not, rewrite "prompt" (and',
     '"hook" or "says" if they are the problem) so it passes, keeping the site style, the same detail as the',
     'example, and the closing sentence about the only readable text.',
@@ -223,7 +228,8 @@ export async function storyCheck(says, happening) {
       'Ignore any "because" or "so that" part, a picture cannot show reasons, and ignore missing small details.',
       'Same means the viewer saw the same kind of person or thing doing the same main action, near enough that',
       'the point would come across. Not the same: a description that is only objects lying about, a different',
-      'main action, or one so vague it could fit any picture.',
+      'main action, one so vague it could fit any picture, or one where all anybody does is look at, hold or',
+      'tap a phone, tablet or button, because that could be any stock photo.',
       'Return JSON only: {"same": true or false, "why": "one short sentence"}',
     ].join('\n')))
     return { same: out.same === true, why: String(out.why || '') }
@@ -252,7 +258,11 @@ export async function makeCover(site, article, slug, generate) {
     if (!why) {
       if (check.ok === null) log('cover', 'not checked, ' + check.seen)
       else log('cover', 'image checked, reads "' + check.seen + '", no defects' + (check.happening ? ', shows: ' + check.happening.slice(0, 160) : ''))
-      return { file, alt: brief.hook, prompt: brief.prompt }
+      // The alt text carries what the picture shows as well as the headline: it
+      // describes the image for anyone who cannot see it, and recentHooks()
+      // reads it back so the next cover does not repeat the scene.
+      const alt = check.happening ? brief.hook + '. ' + check.happening : brief.hook
+      return { file, alt, prompt: brief.prompt }
     }
     log('cover', 'attempt ' + attempt + ' rejected, ' + why.slice(0, 240))
   }

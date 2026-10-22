@@ -93,38 +93,51 @@ So every Strategic Marketer cover is a small story: one real moment from the
 reader's working week, photographed.
 
 The story comes first, in "says", written as who does what and why it matters:
-"A homeowner who was given a roofer's name looks the business up on a phone and
-reaches for the call button, because the page answers the question they had."
+"A customer who looked a bakery up walks in with the phone still in hand and
+the owner greets them, because what they found online brought them to the
+door."
 
-- Who: the owner of an established business, or a customer or prospect looking
-  at one. A clinic, a workshop, an accounting office, a bakery, a landscaping
-  firm, a law practice, a consultancy, a salon. Take the setting from the
-  article's own examples and vary it from cover to cover.
-- The moment: the one moment the article is about. Either the tension it solves
-  (a prospect checks the business on a phone and hesitates; the owner at the
-  counter after closing with the week's posts still not written) or the relief
-  once it is solved (the prospect already calling; the owner approving a
-  finished draft in two minutes between customers). Relief is usually the
-  better cover; the headline names it.
-- Readable at phone size: one action a stranger can name in a sentence,
-  someone choosing, calling, approving, handing over, looking pleased with a
-  result. Only the props the moment needs.
+- Who: the owner of an established business, and often the customer too. Take
+  the business from the article's own examples or the one the engine names, and
+  vary it from cover to cover.
+- The moment: the one moment the article is about, usually the relief once it
+  is solved, because the headline names a result. The owner back with a client
+  instead of at the desk. A customer walking in who found the business online.
+  A new hire answering a question alone. The owner leaving in daylight.
+- The story is told by people and things in the room, never by a screen.
+  Nothing on a screen can be read, so a screen cannot carry the story. A phone
+  or tablet can be in the picture as a supporting prop, but the main action is
+  never someone looking at or tapping a device. Ask: with every screen blank,
+  would a stranger still get it?
+- The strongest covers have two people and the moment between them that the
+  article makes possible: welcomed, answered, served, agreed, handed over.
+  Otherwise one person with a result you can see.
+- Readable at phone size: one action a stranger can name in a sentence. Only
+  real objects a real business has; no invented gadgets, discs, buttons or
+  devices.
 
 How it looks:
 
-- An editorial photograph in natural window light, a real business interior,
-  calm and uncluttered, colour graded to the house palette: warm ivory and
-  sand, sage teal, slate blue, small touches of brushed brass.
+- One continuous editorial photograph, edge to edge, in natural window light,
+  a real business interior, calm and uncluttered, colour graded to the house
+  palette: warm ivory and sand, sage teal, slate blue, small touches of brushed
+  brass.
+- The headline is set over a calm, softly out of focus part of that same scene
+  (a wall, a window, an empty stretch of counter) in an elegant high contrast
+  serif, deep charcoal navy (ivory if that part is dark), with generous
+  margins. Never describe the image as a left part and a right part or give the
+  headline its own panel: on 22 October that made the image model put two
+  photos side by side with a hard seam between them, twice in three tries.
 - Not stock: nobody posing, nobody looking at the camera, no forced smiles, no
   handshakes, no group around a laptop, no one pointing at a chart.
-- One person, two at most, caught mid action: over the shoulder, from the side,
-  hands at work, or a calm three quarter view. Natural hands and faces.
-- Screens are allowed, as the ICP allows simple screen walkthroughs, but nothing
-  on them is readable: soft blocks of layout, a photo, a row of shapes. The
-  same goes for paper, signs, packaging, mugs and clothing.
-- The headline sits on a clean, softly out of focus part of the photo (a wall, a
-  window, an empty table top) in an elegant high contrast serif, deep charcoal
-  navy (ivory if that part of the photo is dark), with generous margins.
+- One or two people, caught mid action. Natural hands and faces. Vary who they
+  are from cover to cover: age, gender, build, clothes, and the shot (close,
+  wide, from behind, through a doorway). The first two story covers were both a
+  woman in her forties in a cardigan at a reception desk with a tablet; that
+  sameness is the thing to avoid.
+- Nothing readable on paper, signs, packaging, mugs, folders or clothing either.
+  A prop that invites a label (a "tax" folder, a menu, a shop sign) is left out
+  or shown blank.
 - No robots, glowing brains, neon, holograms, floating icons, arrows or charts.
   Nothing in the picture says "AI".
 
@@ -133,6 +146,6 @@ The palette and serif David approved on 20 October stay. The gears still life
 new scenes.
 
 Example, written 22 October for "Is Your Online Reputation Costing You
-Sales?", headline "Be The One They Call":
+Sales?", headline "From Search To Your Door":
 
-A 16:9 blog thumbnail, an editorial photograph in soft natural window light, calm and uncluttered, colour graded to warm ivory, sand, sage teal and slate blue with small touches of brushed brass. Left two thirds: a person in their forties sits at a kitchen table in the early evening, seen over the right shoulder, holding a phone. On the table beside a ceramic mug lies a business card a friend passed on, face down. The phone screen shows a local roofing company's page as soft shapes only: a large photo of a finished roof, a row of five small gold stars, three short review cards, and at the bottom a round sage teal call button that the person's thumb is just about to press. The moment says: they were given a name, looked the business up, liked what they found, and are calling. Natural hands with five fingers, nobody looking at the camera. Right third: the softly out of focus warm ivory wall of the kitchen, with an elegant high-contrast serif headline in deep charcoal navy on two lines, reading exactly "Be The One" on the first line and "They Call" on the second line, left aligned, with generous margins from every edge. One continuous scene, no panels. The only readable text in the entire image is that headline, spelled exactly as given. No other words, letters, numbers, labels, logos or watermarks anywhere, including on the phone screen, the card, the mug and clothing.
+A 16:9 blog thumbnail, one continuous editorial photograph running edge to edge, in soft natural morning window light, calm and uncluttered, colour graded to warm ivory, sand, sage teal and slate blue with small touches of brushed brass. Inside a small neighbourhood bakery, seen from behind the counter at eye level: a customer in a slate blue coat has just stepped in through the glass door, a phone still in one hand at their side, and the owner, a man in his fifties in a sage apron, looks up from arranging loaves and smiles in welcome. The moment says: they looked the bakery up, liked what they found, and came in. A few loaves on a wooden shelf and a small brass bell above the door are the only props. The two people stand toward the left of the frame; toward the right, the same room continues into a calm ivory wall softly out of focus with morning light on it, and the headline is set on that wall in an elegant high-contrast serif in deep charcoal navy on two lines, reading exactly "From Search" on the first line and "To Your Door" on the second line, left aligned, with generous margins from every edge. One photograph, no panels, borders or split. Natural faces and hands, nobody looking at the camera, no posing. The only readable text in the entire image is that headline, spelled exactly as given. No other words, letters, numbers, labels, logos or watermarks anywhere, including on the phone, the door, the shelves, packaging and clothing.
