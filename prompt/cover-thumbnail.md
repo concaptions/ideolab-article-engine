@@ -17,10 +17,11 @@ came from prompts written like the ones here, so these are the standard.
   reader's benefit or the article's sharpest idea. Never the post title and
   never the keyword repeated: his own sample covers printed the title in big
   letters, and a cover laid out like his sample looks copied from it.
-- One concrete visual idea from the article: real objects doing something, a
-  small scene or a clear metaphor. Choose the composition each time. Not a
-  laptop or a browser window by default, never a robot, a lightbulb or a
-  dashboard of numbers. No faces.
+- One concrete visual idea from the article. What kind of scene depends on the
+  site, see its section: IdeoLab uses objects and metaphors, Strategic Marketer
+  uses a real moment with a person in it. Choose the composition each time. Not
+  a laptop or a browser window by default, never a robot, a lightbulb or a
+  dashboard of numbers.
 - The headline is the only readable text. Every prompt ends by saying so, with
   the headline spelled out, and the engine reads the image back to check it.
 
@@ -41,9 +42,10 @@ was right; the scenes were not. What went wrong in each, so it is not repeated:
 
 So every scene now has to pass all of these:
 
-- One hero object or one tight group, doing one thing. At most three other small
-  supporting pieces. If the scene needs a sentence with "and" to explain it, it
-  is two scenes; keep the stronger one.
+- One hero doing one thing: one object or one tight group on IdeoLab, one
+  person (two at most) in one moment on Strategic Marketer. At most three other
+  small supporting pieces. If the scene needs a sentence with "and" to explain
+  it, it is two scenes; keep the stronger one.
 - A viewer understands what it says in two seconds, at the size of a phone card.
   The approved two do: gears driving bars up, a pencil line becoming a website.
 - Nothing literal from a figure of speech: no hand tools for "tools", no baskets
@@ -61,7 +63,8 @@ So every scene now has to pass all of these:
 Style: bright, airy pastel SaaS 2.5D illustration, soft and premium. Rounded
 floating objects and simple interface cards with soft shadows, luminous pastel
 gradients (peach, baby blue, lavender, mint, white) with one clear medium blue
-accent. Headline in a large bold rounded sans serif, deep navy.
+accent. Headline in a large bold rounded sans serif, deep navy. Objects and
+interface pieces only, no people and no faces.
 
 Approved example, "AI Text to Website Builder" article, headline "Your Website,
 No Designer Needed":
@@ -70,13 +73,66 @@ A 16:9 blog thumbnail in a bright, airy pastel SaaS 2.5D illustration style. Rig
 
 ## Site: strategicmarketer
 
-Style: minimalist premium. A refined still life or restrained arrangement of
-soft matte 3D objects on a warm ivory surface, soft even studio light, gentle
-long shadows, generous negative space. Palette limited to ivory, brushed brass
-or gold, slate blue, sage teal and sand. Headline in an elegant high contrast
-serif, deep charcoal navy.
+Changed 22 October 2026. The covers made from 20 October were still lifes of
+cards, trays, gears and brass rails on ivory. They looked premium and told
+no story: without the headline nobody could tell what any of them was about.
+David's own ICP for this site (knowledge/strategicmarketer/
+icp-partner-edition.txt, section 24) already says what this reader responds to:
 
-Approved example, "Marketing Operations" article, headline "Make Every
-Marketing Dollar Work":
+- Best visual context: "Real people, natural lighting, office or business
+  environments, simple screen walkthroughs, and clear examples of content."
+- Best story frame: "A person hears about the business, looks it up, and either
+  finds proof of expertise or finds too little to build confidence."
+- Themes: the look-up moment, content that sounds like the real owner, random
+  posting against a repeatable engine, the owner as the bottleneck, offline
+  credibility against online silence, help to put it in place.
+- Avoid: "Robots, neon AI graphics, glowing brain visuals, overdesigned agency
+  ads, generic stock business footage, hype reels, or lifestyle flexing."
 
-A 16:9 blog thumbnail, minimalist premium style, a refined still life on a warm ivory surface with soft, even studio light, long gentle shadows and generous negative space. Left of center: an elegant open clockwork mechanism lying flat, made of a few precisely meshed gears in brushed brass and matte slate blue, with smaller sage teal and sand gears. Each of four gears carries one small embossed pictogram: a megaphone, an envelope, a target and a camera. The gears turn together and drive one slim brass rod that pushes up a small row of three ivory bars rising in height, the tallest with a faint warm glow. Nothing is loose or scattered; everything is connected and working. Right third: an elegant high-contrast serif headline in deep charcoal navy on two lines, reading exactly "Make Every" on the first line and "Marketing Dollar Work" on the second line, left aligned, with generous margins from every edge. Palette limited to ivory, brushed brass, slate blue, sage teal and sand. The only readable text in the entire image is that headline, spelled exactly as given. No other words, letters, numbers, labels, logos or watermarks anywhere, including on the gears and bars.
+So every Strategic Marketer cover is a small story: one real moment from the
+reader's working week, photographed.
+
+The story comes first, in "says", written as who does what and why it matters:
+"A homeowner who was given a roofer's name looks the business up on a phone and
+reaches for the call button, because the page answers the question they had."
+
+- Who: the owner of an established business, or a customer or prospect looking
+  at one. A clinic, a workshop, an accounting office, a bakery, a landscaping
+  firm, a law practice, a consultancy, a salon. Take the setting from the
+  article's own examples and vary it from cover to cover.
+- The moment: the one moment the article is about. Either the tension it solves
+  (a prospect checks the business on a phone and hesitates; the owner at the
+  counter after closing with the week's posts still not written) or the relief
+  once it is solved (the prospect already calling; the owner approving a
+  finished draft in two minutes between customers). Relief is usually the
+  better cover; the headline names it.
+- Readable at phone size: one action a stranger can name in a sentence,
+  someone choosing, calling, approving, handing over, looking pleased with a
+  result. Only the props the moment needs.
+
+How it looks:
+
+- An editorial photograph in natural window light, a real business interior,
+  calm and uncluttered, colour graded to the house palette: warm ivory and
+  sand, sage teal, slate blue, small touches of brushed brass.
+- Not stock: nobody posing, nobody looking at the camera, no forced smiles, no
+  handshakes, no group around a laptop, no one pointing at a chart.
+- One person, two at most, caught mid action: over the shoulder, from the side,
+  hands at work, or a calm three quarter view. Natural hands and faces.
+- Screens are allowed, as the ICP allows simple screen walkthroughs, but nothing
+  on them is readable: soft blocks of layout, a photo, a row of shapes. The
+  same goes for paper, signs, packaging, mugs and clothing.
+- The headline sits on a clean, softly out of focus part of the photo (a wall, a
+  window, an empty table top) in an elegant high contrast serif, deep charcoal
+  navy (ivory if that part of the photo is dark), with generous margins.
+- No robots, glowing brains, neon, holograms, floating icons, arrows or charts.
+  Nothing in the picture says "AI".
+
+The palette and serif David approved on 20 October stay. The gears still life
+("Make Every Marketing Dollar Work") is the record of them, not the model for
+new scenes.
+
+Example, written 22 October for "Is Your Online Reputation Costing You
+Sales?", headline "Be The One They Call":
+
+A 16:9 blog thumbnail, an editorial photograph in soft natural window light, calm and uncluttered, colour graded to warm ivory, sand, sage teal and slate blue with small touches of brushed brass. Left two thirds: a person in their forties sits at a kitchen table in the early evening, seen over the right shoulder, holding a phone. On the table beside a ceramic mug lies a business card a friend passed on, face down. The phone screen shows a local roofing company's page as soft shapes only: a large photo of a finished roof, a row of five small gold stars, three short review cards, and at the bottom a round sage teal call button that the person's thumb is just about to press. The moment says: they were given a name, looked the business up, liked what they found, and are calling. Natural hands with five fingers, nobody looking at the camera. Right third: the softly out of focus warm ivory wall of the kitchen, with an elegant high-contrast serif headline in deep charcoal navy on two lines, reading exactly "Be The One" on the first line and "They Call" on the second line, left aligned, with generous margins from every edge. One continuous scene, no panels. The only readable text in the entire image is that headline, spelled exactly as given. No other words, letters, numbers, labels, logos or watermarks anywhere, including on the phone screen, the card, the mug and clothing.

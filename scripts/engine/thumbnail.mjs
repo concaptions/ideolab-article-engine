@@ -22,6 +22,14 @@
 // says before it describes it, a second text pass holds the brief against the
 // scene rules in prompt/cover-thumbnail.md and rewrites it if it fails, and the
 // image check rejects seams, cut off text and broken objects as well as text.
+//
+// Later on 22 October the Strategic Marketer covers were judged again: tidy
+// still lifes that told no story. That site's section of the guide now asks for
+// a real moment with a person in it, as David's ICP for the site describes, and
+// a site with cover.thumbnail.story set has one more check. The reader says in
+// a sentence what is happening in the picture without being told what was
+// intended, and a text pass compares that with the brief's "says". A cover a
+// stranger cannot read the story from is rejected like a misspelled one.
 import fs from 'node:fs'
 import path from 'node:path'
 import { env, log, ROOT } from './lib.mjs'
@@ -54,7 +62,21 @@ async function recentHooks(site) {
   }
 }
 
-export function briefPrompt(site, { title, body }, used = []) {
+// The kind of business a story cover is set in. Each cover is briefed without
+// seeing the others, and in a test three of six Strategic Marketer briefs picked
+// a clinic. So the setting comes from the list in the site config: the caller
+// can name one, otherwise the title picks it, the same title always the same.
+export function settingFor(site, article) {
+  const list = site.cover.thumbnail?.settings || []
+  if (!list.length) return null
+  if (article.setting) return article.setting
+  let h = 0
+  for (const ch of String(article.title)) h = (h * 31 + ch.charCodeAt(0)) >>> 0
+  return list[h % list.length]
+}
+
+export function briefPrompt(site, { title, body, setting }, used = []) {
+  setting = settingFor(site, { title, setting })
   return [
     'You art direct the cover image for one article on ' + site.name + '. Return JSON only, no code fence:',
     '{"says": "...", "hook": "...", "prompt": "..."}',
@@ -69,12 +91,12 @@ export function briefPrompt(site, { title, body }, used = []) {
     'except one comma or one question mark. Promise nothing the article does not teach.',
     '',
     'prompt: one self contained image prompt that starts with "A 16:9 blog thumbnail", in this site\'s style',
-    'and as detailed as the approved example in the guide below, with a new scene for this article.',
-    'Pick one concrete visual idea from this article that a reader gets at a glance: real objects doing',
-    'something, a small scene or a clear visual metaphor. Decide the composition yourself and say where the',
+    'and as detailed as the example in the guide below, with a new scene for this article.',
+    'Pick one concrete visual idea from this article that a reader gets at a glance, of the kind this site\'s',
+    'section of the guide asks for. Decide the composition yourself and say where the',
     'headline sits (left, right or top, whatever suits the scene) with generous margins from every edge.',
     'Do not default to a laptop or a browser window, and never a robot, a lightbulb or a dashboard full of',
-    'numbers. No faces. No invented statistics, results, logos or brand names.',
+    'numbers. No invented statistics, results, logos or brand names.',
     'End the prompt with exactly this, with your hook in the quotes: The only readable text in the entire',
     'image is the headline, reading exactly "<hook>", spelled exactly as given. No other words, letters,',
     'numbers, labels, logos or watermarks anywhere, including on screens, cards, signs and objects.',
@@ -82,6 +104,9 @@ export function briefPrompt(site, { title, body }, used = []) {
     guide(site),
     '',
     used.length ? 'Headlines already on this site\'s covers, do not reuse or echo any of them: ' + used.join(' | ') : '',
+    setting ? 'The business in this story: ' + setting + '. Use it unless the article\'s own main example is clearly ' +
+      'another kind of business. If the story is about a customer looking the business up, they are somewhere ' +
+      'ordinary, at home, in a car park, at a cafe, and the business they look at is this one.' : '',
     '',
     'Article title: ' + title,
     '',
@@ -110,9 +135,11 @@ export function reviewPrompt(site, brief, used = []) {
     'You review a cover brief for ' + site.name + ' before any image is made. Hold it against every scene rule',
     'below. Count the distinct objects the prompt asks for. Look for anything drawn literally from a figure of',
     'speech, anything that could read as negative or odd, a background split into panels, and a hook that',
-    'echoes one already used. If it passes every rule, return it unchanged. If not, rewrite "prompt" (and',
+    'echoes one already used. Where the site section asks for a story, check that a stranger seeing only the',
+    'picture could say in one sentence who is doing what, and that it is the moment "says" describes.',
+    'If it passes every rule, return it unchanged. If not, rewrite "prompt" (and',
     '"hook" or "says" if they are the problem) so it passes, keeping the site style, the same detail as the',
-    'approved example, and the closing sentence about the only readable text.',
+    'example, and the closing sentence about the only readable text.',
     'Return JSON only: {"pass": true or false, "problems": ["..."], "says": "...", "hook": "...", "prompt": "..."}',
     '',
     guide(site),
@@ -155,12 +182,16 @@ export async function readCover(file, hook) {
         model: env('WRITER_MODEL', { required: false }) || 'gpt-4o',
         messages: [{ role: 'user', content: [
           { type: 'text', text: [
-            'Look at this blog cover image and reply with JSON only: {"text": "...", "defects": ["..."]}.',
+            'Look at this blog cover image and reply with JSON only: {"text": "...", "happening": "...", "defects": ["..."]}.',
             'text: every piece of readable text in the image, exactly as spelled, in reading order, separated by spaces,',
             'including text on screens, cards and objects. If there is none, "NONE".',
-            'defects: only clear problems an ordinary viewer would notice at once. A background split into two',
-            'panels or tones by a visible seam or edge. Text cut off by the edge of the image. Objects that are',
-            'warped, melted, broken or impossible. Anything that looks like a cage, bars, a jail or a trap. An empty',
+            'happening: one plain sentence saying what is going on in the picture, who or what is doing what, the way',
+            'someone seeing it for the first time would say it. Leave the headline out of it.',
+            'defects: only clear problems an ordinary viewer would notice at once. A plain studio or illustrated',
+            'background split into two panels or tones by a visible seam (in a photograph of a real room, walls,',
+            'corners, doors, shelves and windows are normal, not defects). Text cut off by the edge of the image.',
+            'Objects that are warped, melted, broken or impossible. Hands with extra, missing or fused fingers, or a',
+            'distorted face or body. Anything that looks like a cage, bars, a jail or a trap. An empty',
             'list if there are none; do not report matters of taste.',
           ].join(' ') },
           { type: 'image_url', image_url: { url: 'data:image/' + (/\.jpe?g$/i.test(file) ? 'jpeg' : 'png') + ';base64,' + b64 } },
@@ -172,29 +203,58 @@ export async function readCover(file, hook) {
     let out
     try { out = parseJson(j.choices?.[0]?.message?.content || '') } catch { return { ok: null, seen: 'reader reply was not JSON' } }
     const seen = String(out.text || '').trim()
+    const happening = String(out.happening || '').trim()
     const defects = Array.isArray(out.defects) ? out.defects.filter(Boolean) : []
     const textOk = letters(seen) === letters(hook)
-    return { ok: textOk && !defects.length, seen, defects }
+    return { ok: textOk && !defects.length, seen, happening, defects }
   } catch (e) {
     return { ok: null, seen: 'reader failed ' + String(e).slice(0, 120) }
   }
 }
 
+// Whether a viewer who saw only the picture got the story the brief meant.
+// Returns { same, why }, or same null when the check itself could not run.
+export async function storyCheck(says, happening) {
+  try {
+    const out = parseJson(await ask([
+      'A blog cover was meant to show this moment: ' + says,
+      'Someone who saw only the picture, without being told, described it as: ' + happening,
+      'Compare only what a picture can show: who or what is in it, where, and the main thing they are doing.',
+      'Ignore any "because" or "so that" part, a picture cannot show reasons, and ignore missing small details.',
+      'Same means the viewer saw the same kind of person or thing doing the same main action, near enough that',
+      'the point would come across. Not the same: a description that is only objects lying about, a different',
+      'main action, or one so vague it could fit any picture.',
+      'Return JSON only: {"same": true or false, "why": "one short sentence"}',
+    ].join('\n')))
+    return { same: out.same === true, why: String(out.why || '') }
+  } catch (e) {
+    return { same: null, why: 'story check failed ' + String(e.message || e).slice(0, 120) }
+  }
+}
+
 export async function makeCover(site, article, slug, generate) {
   const brief = await coverBrief(site, article)
+  const attempts = site.cover.thumbnail?.attempts || 2
   log('cover', 'headline "' + brief.hook + '"' + (brief.says ? ', shows: ' + brief.says.slice(0, 160) : ''))
-  for (let attempt = 1; attempt <= 2; attempt++) {
+  for (let attempt = 1; attempt <= attempts; attempt++) {
     const file = await generate(brief.prompt, slug + (attempt > 1 ? '-' + attempt : ''))
     const check = await readCover(file, brief.hook)
-    if (check.ok !== false) {
+    let why = null
+    if (check.ok === false) {
+      why = letters(check.seen) !== letters(brief.hook)
+        ? 'the image reads "' + check.seen + '" instead of "' + brief.hook + '"'
+        : 'defects: ' + check.defects.join('; ')
+    } else if (check.ok && site.cover.thumbnail?.story && brief.says && check.happening) {
+      const story = await storyCheck(brief.says, check.happening)
+      if (story.same === false) why = 'the picture reads as "' + check.happening + '", ' + story.why
+      else if (story.same === null) log('cover', story.why)
+    }
+    if (!why) {
       if (check.ok === null) log('cover', 'not checked, ' + check.seen)
-      else log('cover', 'image checked, reads "' + check.seen + '", no defects')
+      else log('cover', 'image checked, reads "' + check.seen + '", no defects' + (check.happening ? ', shows: ' + check.happening.slice(0, 160) : ''))
       return { file, alt: brief.hook, prompt: brief.prompt }
     }
-    const why = letters(check.seen) !== letters(brief.hook)
-      ? 'the image reads "' + check.seen + '" instead of "' + brief.hook + '"'
-      : 'defects: ' + check.defects.join('; ')
     log('cover', 'attempt ' + attempt + ' rejected, ' + why.slice(0, 240))
   }
-  throw new Error('the cover came out wrong twice, nothing was published')
+  throw new Error('the cover came out wrong ' + attempts + ' times, nothing was published')
 }

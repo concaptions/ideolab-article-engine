@@ -24,7 +24,29 @@
     "aspect": "16:9",
     "thumbnail": {
       "text": true,
-      "style": "Minimalist Premium",
+      "style": "Editorial story photograph, ivory sage slate brass palette, serif headline",
+      "story": true,
+      "attempts": 3,
+      "settings": [
+        "a dental practice",
+        "a physiotherapy clinic",
+        "an accounting office",
+        "a family law practice",
+        "a landscaping company",
+        "a bakery",
+        "a hair salon",
+        "a roofing contractor",
+        "a financial advisor",
+        "a furniture showroom",
+        "a veterinary clinic",
+        "a small architecture studio",
+        "a management consultancy",
+        "a plumbing company",
+        "a real estate agency",
+        "a skincare brand that packs its own orders",
+        "a fitness studio",
+        "a wedding photographer"
+      ],
       "guide": "prompt/cover-thumbnail.md, section Site: strategicmarketer"
     }
   },
