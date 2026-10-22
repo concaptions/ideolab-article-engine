@@ -134,7 +134,10 @@ How it looks:
   are from cover to cover: age, gender, build, clothes, and the shot (close,
   wide, from behind, through a doorway). The first two story covers were both a
   woman in her forties in a cardigan at a reception desk with a tablet; that
-  sameness is the thing to avoid.
+  sameness is the thing to avoid. Vary the action too: handing over a paper
+  and two people across a table are the easy defaults, and they wear out fast.
+  Fitting, serving, showing, walking a customer through the space, packing an
+  order, opening up in the morning, finishing a job on site.
 - Nothing readable on paper, signs, packaging, mugs, folders or clothing either.
   A prop that invites a label (a "tax" folder, a menu, a shop sign) is left out
   or shown blank.

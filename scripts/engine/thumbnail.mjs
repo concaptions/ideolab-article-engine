@@ -104,8 +104,9 @@ export function briefPrompt(site, { title, body, setting }, used = []) {
     guide(site),
     '',
     used.length ? 'Covers already on this site, newest first: the headline, then what the picture shows where it is ' +
-      'known. Do not reuse or echo any headline, and do not repeat a scene, a setting or the same kind of person in ' +
-      'the same pose: ' + used.join(' | ') : '',
+      'known. Do not reuse or echo any headline, and do not repeat a scene, a setting, the same kind of person, or ' +
+      'a main action already used (if someone has already handed over a paper or an envelope, or two people already ' +
+      'sit across a table, find another action): ' + used.join(' | ') : '',
     setting ? 'The business in this story: ' + setting + '. Use it unless the article\'s own main example is clearly ' +
       'another kind of business. If the story is about a customer looking the business up, they are somewhere ' +
       'ordinary, at home, in a car park, at a cafe, and the business they look at is this one.' : '',
