@@ -159,8 +159,10 @@ export function reviewPrompt(site, brief, used = []) {
   ].join('\n')
 }
 
+// article.alsoUsed lets a batch pass the covers it has made but not yet put
+// live, so they count as taken too.
 export async function coverBrief(site, article) {
-  const used = await recentHooks(site)
+  const used = [...(article.alsoUsed || []), ...await recentHooks(site)]
   const first = checkBrief(parseJson(await ask(briefPrompt(site, article, used))))
   try {
     const review = parseJson(await ask(reviewPrompt(site, first, used)))
