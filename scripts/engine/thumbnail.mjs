@@ -75,9 +75,11 @@ export function settingFor(site, article) {
   return list[h % list.length]
 }
 
-export function briefPrompt(site, { title, body, setting }, used = []) {
+export function briefPrompt(site, { title, body, setting, retry }, used = []) {
   setting = settingFor(site, { title, setting })
   return [
+    retry ? 'A first scene for this article was tried twice and came out wrong: ' + retry + '. Do not reuse that ' +
+      'scene. Pick a different mechanism whose action cannot be missed at a glance.' : '',
     'You art direct the cover image for one article on ' + site.name + '. Return JSON only, no code fence:',
     '{"says": "...", "hook": "...", "prompt": "..."}',
     '',
@@ -244,11 +246,24 @@ export async function storyCheck(says, happening) {
   }
 }
 
+// On 22 October two Strategic Marketer posts failed all three tries with the same
+// brief: each picture came out as objects lying still, which no retry of that
+// prompt fixed. So from the third try a new scene is briefed, told how the last
+// one turned out.
 export async function makeCover(site, article, slug, generate) {
-  const brief = await coverBrief(site, article)
+  let brief = await coverBrief(site, article)
   const attempts = site.cover.thumbnail?.attempts || 2
+  let lastWhy = null
   log('cover', 'headline "' + brief.hook + '"' + (brief.says ? ', shows: ' + brief.says.slice(0, 160) : ''))
   for (let attempt = 1; attempt <= attempts; attempt++) {
+    if (attempt === 3 && lastWhy) {
+      try {
+        brief = await coverBrief(site, { ...article, retry: lastWhy })
+        log('cover', 'new scene for try 3, headline "' + brief.hook + '"' + (brief.says ? ', shows: ' + brief.says.slice(0, 160) : ''))
+      } catch (e) {
+        log('cover', 'new scene skipped, ' + String(e.message || e).slice(0, 120))
+      }
+    }
     const file = await generate(brief.prompt, slug + (attempt > 1 ? '-' + attempt : ''))
     const check = await readCover(file, brief.hook)
     let why = null
@@ -271,6 +286,7 @@ export async function makeCover(site, article, slug, generate) {
       return { file, alt, prompt: brief.prompt }
     }
     log('cover', 'attempt ' + attempt + ' rejected, ' + why.slice(0, 240))
+    lastWhy = why.slice(0, 300)
   }
   throw new Error('the cover came out wrong ' + attempts + ' times, nothing was published')
 }
