@@ -25,8 +25,8 @@
 //
 // Later on 22 October the Strategic Marketer covers were judged again: tidy
 // still lifes that told no story. That site's section of the guide now asks for
-// a real moment with a person in it, as David's ICP for the site describes, and
-// a site with cover.thumbnail.story set has one more check. The reader says in
+// a real place whose objects show what just happened, and a site with
+// cover.thumbnail.story set has one more check. The reader says in
 // a sentence what is happening in the picture without being told what was
 // intended, and a text pass compares that with the brief's "says". A cover a
 // stranger cannot read the story from is rejected like a misspelled one.
@@ -100,16 +100,16 @@ export function briefPrompt(site, { title, body, setting }, used = []) {
     'End the prompt with exactly this, with your hook in the quotes: The only readable text in the entire',
     'image is the headline, reading exactly "<hook>", spelled exactly as given. No other words, letters,',
     'numbers, labels, logos or watermarks anywhere, including on screens, cards, signs and objects.',
+    'Just before that closing, include this sentence as it is: No people, no hands, no faces, no silhouettes',
+    'or reflections of anyone.',
     '',
     guide(site),
     '',
     used.length ? 'Covers already on this site, newest first: the headline, then what the picture shows where it is ' +
-      'known. Do not reuse or echo any headline, and do not repeat a scene, a setting, the same kind of person, or ' +
-      'a main action already used (if someone has already handed over a paper or an envelope, or two people already ' +
-      'sit across a table, find another action): ' + used.join(' | ') : '',
+      'known. Do not reuse or echo any headline, and do not repeat a scene, a setting or a hero object already ' +
+      'used: ' + used.join(' | ') : '',
     setting ? 'The business in this story: ' + setting + '. Use it unless the article\'s own main example is clearly ' +
-      'another kind of business. If the story is about a customer looking the business up, they are somewhere ' +
-      'ordinary, at home, in a car park, at a cafe, and the business they look at is this one.' : '',
+      'another kind of business.' : '',
     '',
     'Article title: ' + title,
     '',
@@ -127,6 +127,7 @@ function checkBrief(brief) {
   if (words.length < 2 || words.length > 6) throw new Error('cover hook is ' + words.length + ' words: ' + brief.hook)
   if (!/^A 16:9 blog thumbnail/.test(brief.prompt || '')) throw new Error('cover prompt does not start as asked')
   if (!brief.prompt.includes(brief.hook)) throw new Error('cover prompt does not carry the hook "' + brief.hook + '"')
+  if (!/No people, no hands, no faces/.test(brief.prompt)) throw new Error('cover prompt does not rule out people')
   return { says: String(brief.says || '').trim(), hook: brief.hook.trim(), prompt: brief.prompt.trim() }
 }
 
@@ -139,10 +140,11 @@ export function reviewPrompt(site, brief, used = []) {
     'below. Count the distinct objects the prompt asks for. Look for anything drawn literally from a figure of',
     'speech, anything that could read as negative or odd, a background split into panels, and a hook that',
     'echoes one already used. Where the site section asks for a story, check that a stranger seeing only the',
-    'picture could say in one sentence who is doing what, and that it is the moment "says" describes; that the',
-    'main action is not someone looking at or tapping a device; that every object is a real one; that the',
-    'prompt does not split the image into a left part and a right part; and that the scene and the kind of',
-    'person are not ones already used on this site.',
+    'picture could say in one sentence what just happened or is about to, and that it is the moment "says"',
+    'describes; that a screen does not carry the story; that every object is a real one; that the prompt does',
+    'not split the image into a left part and a right part; and that the scene and hero object are not ones',
+    'already used on this site. On every site: no person, face, hand, silhouette or reflection of anyone may',
+    'appear; if the brief has one, rewrite it out.',
     'If it passes every rule, return it unchanged. If not, rewrite "prompt" (and',
     '"hook" or "says" if they are the problem) so it passes, keeping the site style, the same detail as the',
     'example, and the closing sentence about the only readable text.',
@@ -196,8 +198,9 @@ export async function readCover(file, hook) {
             'defects: only clear problems an ordinary viewer would notice at once. A plain studio or illustrated',
             'background split into two panels or tones by a visible seam (in a photograph of a real room, walls,',
             'corners, doors, shelves and windows are normal, not defects). Text cut off by the edge of the image.',
-            'Objects that are warped, melted, broken or impossible. Hands with extra, missing or fused fingers, or a',
-            'distorted face or body. Anything that looks like a cage, bars, a jail or a trap. An empty',
+            'Objects that are warped, melted, broken or impossible. Any person, face, hand, arm or other body part,',
+            'or a silhouette or reflection of one: covers never show people. Anything that looks like a cage, bars,',
+            'a jail or a trap. An empty',
             'list if there are none; do not report matters of taste.',
           ].join(' ') },
           { type: 'image_url', image_url: { url: 'data:image/' + (/\.jpe?g$/i.test(file) ? 'jpeg' : 'png') + ';base64,' + b64 } },
