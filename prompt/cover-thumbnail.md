@@ -24,6 +24,38 @@ came from prompts written like the ones here, so these are the standard.
 - The headline is the only readable text. Every prompt ends by saying so, with
   the headline spelled out, and the engine reads the image back to check it.
 
+## Scene rules
+
+Added 22 October 2026, after David said the covers were "still terrible". Three
+of the four Strategic Marketer covers of 20 and 21 October earned it. The style
+was right; the scenes were not. What went wrong in each, so it is not repeated:
+
+- "Save Time Before Spending": a basket of boxes with two wrenches, a curved
+  track of cards, a brass gate, a tray and a stopwatch. Five ideas, none of them
+  readable at a glance.
+- "Save Time, Not Guesswork": the article said "buy more tools" and the cover
+  showed a hammer, pliers and a wrench. Software tools are never drawn as hand
+  tools.
+- "Earn Buyer Trust": a row of tiles ending in a barred gate that reads as a jail
+  door, on a background split down the right side by a visible seam.
+
+So every scene now has to pass all of these:
+
+- One hero object or one tight group, doing one thing. At most three other small
+  supporting pieces. If the scene needs a sentence with "and" to explain it, it
+  is two scenes; keep the stronger one.
+- A viewer understands what it says in two seconds, at the size of a phone card.
+  The approved two do: gears driving bars up, a pencil line becoming a website.
+- Nothing literal from a figure of speech: no hand tools for "tools", no baskets
+  or carts for "buying", no keys and locks for "unlock", no puzzles, no
+  rockets, no stopwatches or hourglasses for "time".
+- Nothing that reads as negative or odd: no bars, cages, gates, chains, broken
+  or melting things, nothing that looks like a prison, a trap or a warning.
+- One continuous background, no panels, seams or split tones.
+- The hook and the scene say the same thing. Write that one sentence first; if
+  the picture does not show it, change the picture.
+- Do not repeat a scene or a hook already used on this site.
+
 ## Site: ideolab
 
 Style: bright, airy pastel SaaS 2.5D illustration, soft and premium. Rounded
