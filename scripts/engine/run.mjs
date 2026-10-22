@@ -9,7 +9,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { loadSite, slugify, log, fail, ROOT } from './lib.mjs'
-import { pickKeyword, existingPosts } from './keywords.mjs'
+import { existingPosts } from './keywords.mjs'
+import { pickDistinct } from './distinct.mjs'
 import { writeArticle } from './write.mjs'
 import { qa } from './qa.mjs'
 import { generateCover, generateImage, credit } from './cover.mjs'
@@ -73,7 +74,7 @@ if (args['from-file']) {
   md = fs.readFileSync(p, 'utf8')
   log('write', 'using ' + path.basename(p))
 } else {
-  const picked = await pickKeyword(site)
+  const picked = await pickDistinct(site)
   keyword = picked.keyword
   // Only live posts are offered as link targets. On 19 October 2026 David
   // clicked a link in a new article that went to a post set to draft on
