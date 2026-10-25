@@ -54,7 +54,8 @@ jobs:
     # see an env set on the step itself.
     env:
       N8N_ALERT_URL: ${{ secrets.N8N_ALERT_URL }}
-    timeout-minutes: 50
+    # 90, not 50: up to four tries a site, each with up to two rounds of covers.
+    timeout-minutes: 90
     strategy:
       fail-fast: false
       max-parallel: 2
@@ -100,8 +101,8 @@ jobs:
       # changed. The second pass picks a different keyword on its own, because by
       # then the first article counts as already covered. They also come out a few
       # minutes apart instead of together, which reads better on the listing page.
-      # A failure in the first pass does not cancel the second; the step still
-      # fails the job so the failure email goes out.
+      # A failure in one pass does not cancel the next, and a failed pass is
+      # retried, see the loop below.
       #
       # Everything is copied into run.log as well. The console output sits inside
       # a collapsed group, so on a failed run the surface of the page says only
@@ -138,12 +139,23 @@ jobs:
             node -e "console.log('Error: simulated failure, asked for by whoever started this run. Nothing was written and nothing was spent.'); process.exit(1)" 2>&1 | tee -a run.log || fail=1
             exit $fail
           fi
-          for n in 1 2; do
-            echo "::group::Article $n of 2"
-            node scripts/engine/run.mjs --site ${{ matrix.site }} --status ${{ github.event.inputs.status || 'published' }} 2>&1 | tee -a run.log || fail=1
+          # Up to four tries to get two articles, asked for on 25 October 2026.
+          # Until then the engine ran exactly twice, so one failure left the
+          # night one article short: 23 October published one Strategic
+          # Marketer article after a cover was rejected three times. A try that
+          # fails is followed by another until two are live. The step fails, and
+          # the failure email goes out, only if two could not be published.
+          published=0
+          for n in 1 2 3 4; do
+            [ "$published" -ge 2 ] && break
+            echo "::group::Try $n, $published of 2 published so far"
+            if node scripts/engine/run.mjs --site ${{ matrix.site }} --status ${{ github.event.inputs.status || 'published' }} 2>&1 | tee -a run.log; then
+              published=$((published + 1))
+            fi
             echo "::endgroup::"
           done
-          exit $fail
+          echo "$published of 2 published" | tee -a run.log
+          [ "$published" -ge 2 ] || exit 1
 
       - name: Keep the cover that was generated
         if: steps.gate.outputs.run == 'yes'

@@ -165,12 +165,24 @@ log('cover', 'credit before ' + (await credit()))
 // one object studio cover stays for any site without it.
 let file, coverAlt
 if (site.cover.thumbnail) {
-  try {
-    const made = await makeCover(site, { title, body: parsed.body }, slug, (prompt, name) => generateImage(site, prompt, name))
-    file = made.file
-    coverAlt = made.alt
-  } catch (e) {
-    fail('cover', String(e.message || e))
+  // 23 October 2026: a Strategic Marketer cover was rejected three times, the
+  // finished article was thrown away with it, and the next pass wrote the same
+  // article again from scratch. The article was fine. So a rejected cover gets a
+  // second round with a new scene, told how the last one came out, and the
+  // article is kept.
+  const ROUNDS = 2
+  let retry = null
+  for (let round = 1; round <= ROUNDS && !file; round++) {
+    try {
+      const made = await makeCover(site, { title, body: parsed.body, retry }, slug + (round > 1 ? '-r' + round : ''),
+        (prompt, name) => generateImage(site, prompt, name))
+      file = made.file
+      coverAlt = made.alt
+    } catch (e) {
+      if (round === ROUNDS || !e.lastWhy) fail('cover', String(e.message || e))
+      retry = e.lastWhy
+      log('cover', 'round ' + round + ' failed, starting round ' + (round + 1) + ' with a new scene')
+    }
   }
 } else {
   file = await generateCover(site, coverObjects, slug)

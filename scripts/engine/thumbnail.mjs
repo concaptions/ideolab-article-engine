@@ -288,5 +288,7 @@ export async function makeCover(site, article, slug, generate) {
     log('cover', 'attempt ' + attempt + ' rejected, ' + why.slice(0, 240))
     lastWhy = why.slice(0, 300)
   }
-  throw new Error('the cover came out wrong ' + attempts + ' times, nothing was published')
+  const err = new Error('the cover came out wrong ' + attempts + ' times, nothing was published')
+  err.lastWhy = lastWhy
+  throw err
 }
