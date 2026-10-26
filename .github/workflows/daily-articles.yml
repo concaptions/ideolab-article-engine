@@ -228,7 +228,7 @@ jobs:
         run: |
           exec > >(tee -a run.log) 2>&1
           git config user.name "Usama"
-          git config user.email "concaption@gmail.com"
+          git config user.email "192884996+concaptions@users.noreply.github.com"
           git add sites/${{ matrix.site }}.json topics/${{ matrix.site }}.md
           git commit -m "Top up the ${{ matrix.site }} topic list from its own documents"
           for i in 1 2 3 4 5; do
