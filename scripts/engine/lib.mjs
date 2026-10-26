@@ -72,7 +72,9 @@ export function log(step, msg) {
   console.log('[' + step.padEnd(9) + '] ' + msg)
 }
 
-export function fail(step, msg) {
+// Exit code 2 is kept for preflight.mjs: an account that cannot pay, which no
+// retry tonight will fix.
+export function fail(step, msg, code = 1) {
   console.error('[' + step.padEnd(9) + '] FAILED  ' + msg)
-  process.exit(1)
+  process.exit(code)
 }

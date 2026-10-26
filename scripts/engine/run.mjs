@@ -18,6 +18,7 @@ import { makeCover } from './thumbnail.mjs'
 import { uploadCover } from './upload.mjs'
 import { publishPost } from './publish.mjs'
 import { verifyLive } from './verify.mjs'
+import { preflight } from './preflight.mjs'
 
 const args = {}
 for (let i = 2; i < process.argv.length; i++) {
@@ -63,6 +64,15 @@ function record(entry) {
 
 const site = loadSite(args.site)
 log('site', site.name + '  ' + site.siteUrl)
+
+// Before a keyword is picked or a word is written. --check stops here, so the
+// accounts can be tested after a top up without writing an article.
+const blocked = await preflight(site)
+if (blocked.length) fail('preflight', blocked.map(b => b.replace(/\.$/, '')).join(' | ') + '. Nothing was written.', 2)
+if (args.check) {
+  log('done', 'every account can pay, nothing written')
+  process.exit(0)
+}
 
 let keyword = args.keyword || null
 let topic = null

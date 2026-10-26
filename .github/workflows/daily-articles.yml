@@ -46,6 +46,11 @@ on:
         type: choice
         options: [published, draft]
         default: published
+      check_only:
+        description: Only check that every key works and has credit, after a top up. Writes nothing
+        type: choice
+        options: ['no', 'yes']
+        default: 'no'
 
 jobs:
   article:
@@ -139,20 +144,38 @@ jobs:
             node -e "console.log('Error: simulated failure, asked for by whoever started this run. Nothing was written and nothing was spent.'); process.exit(1)" 2>&1 | tee -a run.log || fail=1
             exit $fail
           fi
+          # Every account is asked before anything is spent, see preflight.mjs.
+          # This runs that check alone. A failed check fails the job, so the
+          # failure email names the account that cannot pay.
+          if [ "${{ github.event.inputs.check_only }}" = "yes" ]; then
+            node scripts/engine/run.mjs --site ${{ matrix.site }} --check 2>&1 | tee -a run.log || fail=1
+            exit $fail
+          fi
           # Up to four tries to get two articles, asked for on 25 October 2026.
           # Until then the engine ran exactly twice, so one failure left the
           # night one article short: 23 October published one Strategic
           # Marketer article after a cover was rejected three times. A try that
           # fails is followed by another until two are live. The step fails, and
           # the failure email goes out, only if two could not be published.
+          #
+          # Exit code 2 is the account check refusing, added on 26 October 2026.
+          # An empty account stays empty for the rest of the night, so there is
+          # no next try.
           published=0
           for n in 1 2 3 4; do
             [ "$published" -ge 2 ] && break
             echo "::group::Try $n, $published of 2 published so far"
-            if node scripts/engine/run.mjs --site ${{ matrix.site }} --status ${{ github.event.inputs.status || 'published' }} 2>&1 | tee -a run.log; then
-              published=$((published + 1))
-            fi
+            set +e
+            node scripts/engine/run.mjs --site ${{ matrix.site }} --status ${{ github.event.inputs.status || 'published' }} 2>&1 | tee -a run.log
+            code=${PIPESTATUS[0]}
+            set -e
             echo "::endgroup::"
+            if [ "$code" = 0 ]; then
+              published=$((published + 1))
+            elif [ "$code" = 2 ]; then
+              echo "An account cannot pay, so no more tries tonight" | tee -a run.log
+              break
+            fi
           done
           echo "$published of 2 published" | tee -a run.log
           [ "$published" -ge 2 ] || exit 1
@@ -174,7 +197,7 @@ jobs:
       # exits without spending anything while that count is above its floor.
       - name: Top up the topic list from the site's own documents
         id: topics
-        if: always() && steps.gate.outputs.run == 'yes'
+        if: always() && steps.gate.outputs.run == 'yes' && github.event.inputs.check_only != 'yes'
         env:
           IDEOLAB_API_KEY: ${{ secrets.IDEOLAB_API_KEY }}
           STRATEGIC_API_KEY: ${{ secrets.STRATEGIC_API_KEY }}

@@ -276,6 +276,15 @@ async function loadPool(site, { now, refresh = false }) {
   return candidates
 }
 
+// Whether the next pick will rebuild the pool, and so spend on DataForSEO.
+// preflight.mjs asks, so it only checks that balance on the night it is used.
+export function poolNeedsBuilding(site, now = Date.now()) {
+  const file = poolFile(site)
+  if (!fs.existsSync(file)) return true
+  const saved = JSON.parse(fs.readFileSync(file, 'utf8'))
+  return (now - Date.parse(saved.builtAt)) / 86400000 >= POOL_DAYS
+}
+
 // Group the variants of one idea. The shortest spelling leads the article,
 // because "infographic examples" is a title and "examples of a infographic" is
 // the same search typed badly. The rest are there for the writer to use
