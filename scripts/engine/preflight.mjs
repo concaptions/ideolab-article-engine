@@ -20,8 +20,10 @@ import { existingPosts, poolNeedsBuilding } from './keywords.mjs'
 // article can spend on its cover, and nothing less is enough to start one.
 const KIE_PER_IMAGE = 18
 const COVER_ROUNDS = 2
-// A new keyword pool is about thirty DataForSEO calls, roughly eighty cents.
-const DATAFORSEO_MIN = 1
+// A new keyword pool is about seventy DataForSEO calls: $1.98 to $2.13 a site
+// in the runs of 20 to 24 October 2026. Starting one with less than that runs
+// dry halfway and loses what was spent, so the floor sits above it.
+const DATAFORSEO_MIN = 3
 
 function basic(user, pass) {
   return 'Basic ' + Buffer.from(user + ':' + pass).toString('base64')
@@ -96,8 +98,8 @@ async function cloudinary() {
   return null
 }
 
-// The pool is carried between runs for a week, so most nights DataForSEO is not
-// called at all. Its balance only matters on the night the pool is rebuilt.
+// The pool is kept in the repository for ten days, so most nights DataForSEO is
+// not called at all. Its balance only matters on the night the pool is rebuilt.
 async function dataforseo(site) {
   if (!poolNeedsBuilding(site)) {
     log('preflight', 'DataForSEO not needed, the keyword pool is still fresh')
@@ -111,7 +113,7 @@ async function dataforseo(site) {
     if (r.status === 401) return 'DataForSEO refused the login (DATAFORSEO_LOGIN)'
     const balance = j.tasks?.[0]?.result?.[0]?.money?.balance
     if (typeof balance !== 'number') return unsure('DataForSEO', new Error('no balance in the answer, ' + j.status_code + ' ' + j.status_message))
-    if (balance < DATAFORSEO_MIN) return 'DataForSEO has $' + balance.toFixed(2) + ' and the keyword pool is due a rebuild, which costs about $0.80. Top up DataForSEO'
+    if (balance < DATAFORSEO_MIN) return 'DataForSEO has $' + balance.toFixed(2) + ' and the keyword pool is due a rebuild, which costs about $2.10. Top up DataForSEO'
     log('preflight', 'DataForSEO ok, $' + balance.toFixed(2) + ', the keyword pool will be rebuilt')
   } catch (e) {
     return unsure('DataForSEO', e)

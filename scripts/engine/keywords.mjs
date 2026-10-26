@@ -22,7 +22,10 @@ import path from 'node:path'
 import { env, api, log, ROOT } from './lib.mjs'
 
 const LABS = 'https://api.dataforseo.com/v3/dataforseo_labs/google/'
-const POOL_DAYS = 7
+// Ten days, not seven, from 26 October 2026: the pool is about seventy
+// DataForSEO calls, $2.10 a site, and a week's refresh was more than the
+// articles needed.
+const POOL_DAYS = 10
 const MAX_WORDS = 6
 
 // The only words allowed to stand beside the topic phrase. Every one of them is
@@ -187,8 +190,9 @@ function toCandidate(item) {
   }
 }
 
-// One call per topic, cached for a week. A daily run costs nothing extra, and
-// the pool still refreshes often enough to catch a term that is rising.
+// One call per topic, kept for POOL_DAYS in the repository. A daily run costs
+// nothing extra, and the pool still refreshes often enough to catch a term that
+// is rising. Topics added in between are searched at the next refresh.
 // Asking once, ordered by volume, never reaches the long tail. Measured on
 // 8 October 2026 against "project management": a page of 200 reaches down to a
 // volume of 20,000, and raising the page to 1,000 rows costs four times as much
