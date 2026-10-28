@@ -76,3 +76,20 @@ Dropped from the list to stay inside 40 topics, oldest first: ai tools for small
 | marketing consultant | Objections | I have worked with consultants before and ended up with advice instead of implementation. | 10 found, top 49500/mo |
 
 Dropped from the list to stay inside 40 topics, oldest first: sales funnel, lead nurturing, marketing analytics, content strategy, brand voice, competitor analysis, market segmentation, knowledge base, internal documentation, employee onboarding
+
+## 2026-10-28
+
+| Topic | Group | The question it came from | Searches around it |
+|---|---|---|---|
+| brand guidelines | Questions | What should AI know about our business before we trust it? | 10 found, top 8100/mo |
+| content strategy | Problems | Our content stops every time client work or daily operations get busy. | 10 found, top 5400/mo |
+| content quality | Objections | We have tried outside marketing help before, and I had to rewrite everything. | 10 found, top 1300/mo |
+| ai marketing tools | Decisions | Should we buy more AI tools or build a system around how our business already works? | 10 found, top 3600/mo |
+| marketing systems | Comparisons | Do we need more random marketing activity or a repeatable marketing system? | 10 found, top 90500/mo |
+| sales collateral | Use cases | We need sales materials that explain what we sell and why customers choose us. | 10 found, top 480/mo |
+| business automation | Questions | Where should we use AI first so it creates real business value? | 10 found, top 1900/mo |
+| business documentation | Problems | Too much of what the business knows is still stuck in the owner’s head. | 10 found, top 2400/mo |
+| ai generated content | Objections | I do not want AI making our business sound cheap, fake, or generic. | 10 found, top 1300/mo |
+| ai business strategy | Decisions | Should our first AI project focus on marketing, sales, operations, or internal knowledge? | 10 found, top 260/mo |
+
+Dropped from the list to stay inside 40 topics, oldest first: project management, ai hallucinations, content production, content marketing agency, company wiki, customer communication, thought leadership, content automation, online visibility, ai copywriting
